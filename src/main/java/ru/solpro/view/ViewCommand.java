@@ -30,7 +30,7 @@ public class ViewCommand extends AlwaysCommand implements Command {
      * @throws IOException  ошибка ввыода/вывода
      */
     @Override
-    public boolean execute(String[] args) throws SystemException, IOException{
+    public boolean execute(String[] args) throws SystemException, IOException {
         if (args == null) {
             printHelp();
             return true;

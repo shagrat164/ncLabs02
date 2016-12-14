@@ -7,9 +7,12 @@
 package ru.solpro;
 
 import ru.solpro.controller.CommandController;
+import ru.solpro.controller.Database;
 import ru.solpro.controller.parser.DataParser;
 import ru.solpro.controller.parser.SerializationData;
 import ru.solpro.controller.parser.XmlData;
+
+import java.sql.SQLException;
 
 /**
  * Главный класс приложения.
@@ -32,10 +35,13 @@ public class MainApp {
      * Точка входа в приложение при запуске.
      * @param args    Аргументы запуска
      */
-    public static void main(String[] args) {
-//        init();
-        CommandController commandController = new CommandController();
+    public static void main(String[] args) throws SQLException {
 
-        commandController.execute();
+        Database db = new Database();
+        db.dbConnect();
+        db.dbDisconnect();
+//        init();
+//        CommandController commandController = new CommandController();
+//        commandController.execute();
     }
 }
