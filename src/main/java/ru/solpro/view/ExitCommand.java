@@ -5,9 +5,6 @@
 package ru.solpro.view;
 
 import ru.solpro.controller.SystemException;
-import ru.solpro.controller.parser.DataParser;
-import ru.solpro.controller.parser.SerializationData;
-import ru.solpro.controller.parser.XmlData;
 
 import java.io.IOException;
 
@@ -27,8 +24,6 @@ public class ExitCommand implements Command {
      */
     @Override
     public boolean execute(String[] args) throws SystemException, IOException {
-        saveData();
-        System.out.println("Данные успешно сохранены.");
         return false;
     }
 
@@ -55,14 +50,5 @@ public class ExitCommand implements Command {
     @Override
     public String getDescription() {
         return "Выход из программы";
-    }
-
-    /**
-     * Сохранение данных.
-     */
-    private void saveData() {
-//        DataParser dataParser = new SerializationData();
-        DataParser dataParser = new XmlData();
-        dataParser.save();
     }
 }

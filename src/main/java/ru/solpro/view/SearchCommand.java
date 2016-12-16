@@ -4,10 +4,7 @@
 
 package ru.solpro.view;
 
-import ru.solpro.controller.SystemException;
-import ru.solpro.controller.TrainModelController;
-import ru.solpro.controller.RouteModelController;
-import ru.solpro.controller.StationModelController;
+import ru.solpro.controller.*;
 import ru.solpro.model.Train;
 import ru.solpro.model.Route;
 import ru.solpro.model.Station;
@@ -15,6 +12,9 @@ import ru.solpro.model.Station;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 /**
@@ -134,18 +134,28 @@ public class SearchCommand implements Command {
 	 * Поиск поезда.
 	 */
     private void searchTrain() throws IOException {
-        //  SELECT * FROM `itrain`.`trains` WHERE `number` LIKE '10_5';
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        TrainModelController trainModelController = TrainModelController.getInstance();
+        Database database = new Database();
+        database.connect();
 
         System.out.print("\tВведите номер поезда: ");
-        Integer integer = Integer.parseInt(reader.readLine());
-        Train result = trainModelController.search(integer);
-        if (result == null) {
-            System.out.println("\tНичего не найдено.");
-            return;
+        String strFind = reader.readLine();
+        if (strFind.contains("*")) {
+            strFind = strFind.replace("*", "%");
         }
-        System.out.println("\t" + result);
+        if (strFind.contains("?")) {
+            strFind = strFind.replace("?", "_");
+        }
+
+        String sql = "SELECT * FROM `itrain`.`trains` WHERE `number` LIKE '" + strFind + "';";
+
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.print("[" + resultSet.getInt("id") + "] " + resultSet.getString("number"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
     }
 }

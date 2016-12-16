@@ -2,36 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24a53e27-a384-40ea-b082-f09a606ac658" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/MainApp.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/CommandController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/ModelController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/ParsedCommand.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/RouteModelController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/StationModelController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/SystemException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/TrainModelController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/adapter/LocalDateTimeAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/parser/DataParser.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/parser/SerializationData.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/controller/parser/XmlData.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/model/Route.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/model/Schedule.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/model/Station.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/model/Train.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/view/AddCommand.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/view/AlwaysCommand.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/view/Command.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/view/DelCommand.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/view/EditCommand.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/view/ExitCommand.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/view/HelpCommand.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/view/SearchCommand.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/solpro/view/ViewCommand.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/ru/solpro/controller/parser/DbData.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/adapter/LocalDateTimeAdapter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/parser/DataParser.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/parser/SerializationData.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/parser/XmlData.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ru/solpro/MainApp.class" afterPath="$PROJECT_DIR$/target/classes/ru/solpro/MainApp.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ru/solpro/controller/CommandController.class" afterPath="$PROJECT_DIR$/target/classes/ru/solpro/controller/CommandController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ru/solpro/controller/Database.class" afterPath="$PROJECT_DIR$/target/classes/ru/solpro/controller/Database.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ru/solpro/controller/RouteModelController.class" afterPath="$PROJECT_DIR$/target/classes/ru/solpro/controller/RouteModelController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ru/solpro/controller/StationModelController.class" afterPath="$PROJECT_DIR$/target/classes/ru/solpro/controller/StationModelController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ru/solpro/controller/TrainModelController.class" afterPath="$PROJECT_DIR$/target/classes/ru/solpro/controller/TrainModelController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ru/solpro/view/ExitCommand.class" afterPath="$PROJECT_DIR$/target/classes/ru/solpro/view/ExitCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ru/solpro/view/ViewCommand.class" afterPath="$PROJECT_DIR$/target/classes/ru/solpro/view/ViewCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ncLabs02.iml" afterPath="$PROJECT_DIR$/ncLabs02.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/MainApp.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/MainApp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/CommandController.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/CommandController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/Database.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/Database.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/ModelController.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/ModelController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/RouteModelController.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/RouteModelController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/StationModelController.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/StationModelController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/TrainModelController.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/controller/TrainModelController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/view/AddCommand.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/view/AddCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/view/DelCommand.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/view/DelCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/view/ExitCommand.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/view/ExitCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/view/SearchCommand.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/view/SearchCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/solpro/view/ViewCommand.java" afterPath="$PROJECT_DIR$/src/main/java/ru/solpro/view/ViewCommand.java" />
     </list>
     <ignored path="ncLabs02.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -61,13 +61,65 @@
     <favorites_list name="ncLabs02" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="MainApp.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/MainApp.java">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="CommandController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/CommandController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+            <state relative-caret-position="403">
+              <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SearchCommand.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/SearchCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="437">
+              <caret line="139" column="0" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
+              <folding>
+                <marker date="1481892823359" expanded="true" signature="4519:4572" ph="SELECT * FRO... trains" />
+                <marker date="1481892823359" expanded="true" signature="4519:4588" ph="SELECT * FRO... trains" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RouteModelController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/RouteModelController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="332">
+              <caret line="89" column="8" selection-start-line="89" selection-start-column="8" selection-end-line="94" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/AddCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="440">
+              <caret line="151" column="12" selection-start-line="151" selection-start-column="12" selection-end-line="157" selection-end-column="13" />
+              <folding>
+                <marker date="1481889116020" expanded="true" signature="3254:3291" ph="INSERT INTO stations... " />
+                <marker date="1481889116020" expanded="true" signature="3254:3326" ph="INSERT INTO stations... " />
+                <marker date="1481889116020" expanded="true" signature="4644:4694" ph="INSERT INTO `routes`... " />
+                <marker date="1481889116020" expanded="true" signature="4644:4714" ph="INSERT INTO `routes`... " />
+                <marker date="1481889116020" expanded="true" signature="4644:4715" ph="INSERT INTO `routes`... " />
+                <marker date="1481889116020" expanded="true" signature="4644:4736" ph="INSERT INTO `routes`... " />
+                <marker date="1481889116020" expanded="true" signature="5829:5888" ph="INSERT INTO `trains`... " />
+                <marker date="1481889116020" expanded="true" signature="7052:7106" ph="select `rout... schedule" />
+                <marker date="1481889116020" expanded="true" signature="9158:9231" ph="insert into `schedule`... " />
+                <marker date="1481889116020" expanded="true" signature="9158:9232" ph="insert into `schedule`... " />
+                <marker date="1481889116020" expanded="true" signature="9158:9250" ph="insert into `schedule`... " />
+                <marker date="1481889116020" expanded="true" signature="9158:9255" ph="insert into `schedule`... " />
+                <marker date="1481889116020" expanded="true" signature="9158:9274" ph="insert into `schedule`... " />
+                <marker date="1481889116020" expanded="true" signature="9158:9297" ph="insert into `schedule`... " />
+                <marker date="1481889116020" expanded="true" signature="9158:9319" ph="insert into `schedule`... " />
+                <marker date="1481889116020" expanded="true" signature="9367:9536" ph="insert into `schedule`... " />
+                <marker date="1481889116020" expanded="true" signature="9367:9537" ph="insert into `schedule`... " />
+                <marker date="1481889116020" expanded="true" signature="9367:9561" ph="insert into `schedule`... " />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -89,6 +141,10 @@
       <projects_view />
     </option>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/ViewCommand.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/AddCommand.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -103,8 +159,26 @@
         <option value="$PROJECT_DIR$/src/ru/solpro/controller/Database.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/3c93718f-4c26-4788-9bef-ff1f4113f680/console.sql" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/model/Route.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/model/Schedule.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/model/Train.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/controller/parser/Database.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/model/Station.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/controller/parser/DbData.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/view/EditCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/controller/DbData.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/solpro/MainApp.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/controller/ModelController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/controller/StationModelController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/controller/TrainModelController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/controller/RouteModelController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/view/ViewCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/solpro/controller/Database.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/view/ExitCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/view/AddCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/view/DelCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/controller/CommandController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/solpro/view/SearchCommand.java" />
       </list>
     </option>
   </component>
@@ -132,8 +206,24 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1296" />
-    <option name="height" value="1000" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Android</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -160,7 +250,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -237,10 +326,101 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ncLabs02" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ncLabs02" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solpro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ncLabs02" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ncLabs02" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solpro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ncLabs02" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ncLabs02" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solpro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -702,42 +882,46 @@
       <workItem from="1481706996130" duration="5726000" />
       <workItem from="1481737068270" duration="1248000" />
       <workItem from="1481738630190" duration="2194000" />
+      <workItem from="1481784226466" duration="6431000" />
+      <workItem from="1481803838824" duration="841000" />
+      <workItem from="1481825233696" duration="2041000" />
+      <workItem from="1481870081389" duration="18872000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17107000" />
+    <option name="totallyTimeSpent" value="45292000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928804" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26652452" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32949308" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25161812" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27022654" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17377399" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26918977" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Database Console" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32949308" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -753,7 +937,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -762,6 +946,53 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/MainApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#552#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/MainApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#552#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/parser/DataParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/MainApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#552#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/EditCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -779,7 +1010,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#2659#2660#0" expanded="true" />
+            <element signature="e#2688#2689#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -788,7 +1022,6 @@
         <state relative-caret-position="2839">
           <caret line="184" column="24" selection-start-line="184" selection-start-column="24" selection-end-line="184" selection-end-column="24" />
           <folding>
-            <element signature="method#addStation#0;class#AddCommand#0" expanded="false" />
             <element signature="method#addRoute#0;class#AddCommand#0" expanded="false" />
             <element signature="method#addTrain#0;class#AddCommand#0" expanded="false" />
             <element signature="method#addSchedule#0;class#AddCommand#0" expanded="false" />
@@ -800,157 +1033,10 @@
     <entry file="file://$PROJECT_DIR$/src/ru/solpro/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/ru/solpro/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/ru/solpro/Main.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/adapter/LocalDateTimeAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/model/Train.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/model/Station.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/model/Schedule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/model/Route.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="163" column="21" selection-start-line="163" selection-start-column="21" selection-end-line="163" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/RouteModelController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="61">
-          <caret line="74" column="7" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/EditCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="145" column="22" selection-start-line="145" selection-start-column="22" selection-end-line="145" selection-end-column="22" />
-          <folding>
-            <element signature="method#editTrain#0;class#EditCommand#0" expanded="false" />
-            <element signature="method#editTrainRoute#0;class#EditCommand#0" expanded="false" />
-            <element signature="method#editRoute#0;class#EditCommand#0" expanded="false" />
-            <element signature="method#editStation#0;class#EditCommand#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/SearchCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/AddCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="95" column="66" selection-start-line="95" selection-start-column="66" selection-end-line="95" selection-end-column="66" />
-          <folding>
-            <element signature="method#addStation#0;class#AddCommand#0" expanded="false" />
-            <element signature="method#addRoute#0;class#AddCommand#0" expanded="false" />
-            <element signature="method#addTrain#0;class#AddCommand#0" expanded="false" />
-            <element signature="method#addSchedule#0;class#AddCommand#0" expanded="false" />
-            <element signature="method#isExitOperation#0;class#AddCommand#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/DelCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="761">
-          <caret line="167" column="66" selection-start-line="167" selection-start-column="66" selection-end-line="167" selection-end-column="66" />
-          <folding>
-            <element signature="method#delSchedule#0;class#DelCommand#0" expanded="false" />
-            <element signature="method#delTrain#0;class#DelCommand#0" expanded="false" />
-            <element signature="method#delRoute#0;class#DelCommand#0" expanded="false" />
-            <element signature="method#delStation#0;class#DelCommand#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="dbDummy://dbtable:/ea6f263c/3c93718f-4c26-4788-9bef-ff1f4113f680/itrain.stations" />
-    <entry file="dbDummy://dbtable:/ae2ab97a/3c93718f-4c26-4788-9bef-ff1f4113f680/itrain.schedule">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbDummy://dbtable:/ae2ab97a/3c93718f-4c26-4788-9bef-ff1f4113f680/itrain.routes">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbDummy://dbtable:/ae2ab97a/3c93718f-4c26-4788-9bef-ff1f4113f680/itrain.stations">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/3c93718f-4c26-4788-9bef-ff1f4113f680/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="23" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/TrainModelController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/ViewCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-714">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="dbDummy://dbtable:/ae2ab97a/3c93718f-4c26-4788-9bef-ff1f4113f680/itrain.schedule" />
+    <entry file="dbDummy://dbtable:/ae2ab97a/3c93718f-4c26-4788-9bef-ff1f4113f680/itrain.routes" />
+    <entry file="dbDummy://dbtable:/ae2ab97a/3c93718f-4c26-4788-9bef-ff1f4113f680/itrain.stations" />
     <entry file="file://$PROJECT_DIR$/sql_dump.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -967,14 +1053,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/CommandController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -983,33 +1061,345 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/src.zip!/java/sql/ResultSet.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/AlwaysCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1907">
-          <caret line="147" column="59" selection-start-line="147" selection-start-column="59" selection-end-line="147" selection-end-column="59" />
+        <state relative-caret-position="187">
+          <caret line="13" column="15" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/adapter/LocalDateTimeAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/Database.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/model/Schedule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/model/Route.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/parser/DataParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/3c93718f-4c26-4788-9bef-ff1f4113f680/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="23" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/EditCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="241" column="0" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+          <folding>
+            <element signature="method#editTrain#0;class#EditCommand#0" expanded="false" />
+            <element signature="method#editTrainRoute#0;class#EditCommand#0" expanded="false" />
+            <element signature="method#editRoute#0;class#EditCommand#0" expanded="false" />
+            <element signature="method#editStation#0;class#EditCommand#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/ParsedCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/model/Train.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/ModelController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/StationModelController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#4481#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#778#779#0" expanded="true" />
+            <element signature="e#820#821#0" expanded="true" />
+            <element signature="e#1363#1364#0" expanded="true" />
+            <element signature="e#1421#1422#0" expanded="true" />
+            <element signature="e#1542#1543#0" expanded="true" />
+            <element signature="e#1573#1574#0" expanded="true" />
+            <element signature="e#1713#1714#0" expanded="true" />
+            <element signature="e#1753#1754#0" expanded="true" />
+            <element signature="e#3762#3763#0" expanded="true" />
+            <element signature="e#3809#3810#0" expanded="true" />
+            <element signature="e#4076#4077#0" expanded="true" />
+            <element signature="e#4120#4121#0" expanded="true" />
+            <element signature="e#4409#4410#0" expanded="true" />
+            <element signature="e#4477#4478#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/TrainModelController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3133">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding>
+            <element signature="e#967#968#0" expanded="true" />
+            <element signature="e#1007#1008#0" expanded="true" />
+            <element signature="e#1541#1542#0" expanded="true" />
+            <element signature="e#1597#1598#0" expanded="true" />
+            <element signature="e#1721#1722#0" expanded="true" />
+            <element signature="e#1750#1751#0" expanded="true" />
+            <element signature="e#1884#1885#0" expanded="true" />
+            <element signature="e#1920#1921#0" expanded="true" />
+            <element signature="e#2197#2198#0" expanded="true" />
+            <element signature="e#2224#2225#0" expanded="true" />
+            <element signature="e#2851#2852#0" expanded="true" />
+            <element signature="e#2891#2892#0" expanded="true" />
+            <element signature="e#3142#3143#0" expanded="true" />
+            <element signature="e#3199#3200#0" expanded="true" />
+            <element signature="e#3824#3825#0" expanded="true" />
+            <element signature="e#3867#3868#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/model/Station.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1161">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/src.zip!/java/sql/Date.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="160" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/MainApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#552#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/Command.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/Database.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="78" column="13" selection-start-line="78" selection-start-column="13" selection-end-line="78" selection-end-column="13" />
+        <state relative-caret-position="743">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
           <folding>
-            <element signature="e#0#2317#0" expanded="true" />
-            <element signature="e#2210#2211#0" expanded="true" />
-            <element signature="e#2243#2244#0" expanded="true" />
-            <element signature="e#2282#2283#0" expanded="true" />
-            <element signature="e#2314#2315#0" expanded="true" />
+            <element signature="e#1577#1578#0" expanded="true" />
+            <element signature="e#1609#1610#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/MainApp.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/ExitCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/ViewCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2666">
+          <caret line="244" column="9" selection-start-line="244" selection-start-column="9" selection-end-line="244" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1481879053424" expanded="true" signature="3007:3042" ph="SELECT `id`,... stations" />
+            <marker date="1481879053424" expanded="true" signature="3649:3842" ph="SELECT t1.id... routes" />
+            <marker date="1481879053424" expanded="true" signature="3649:3843" ph="SELECT `id`,... stations" />
+            <marker date="1481879053424" expanded="true" signature="4485:4507" ph="SELECT * FRO... trains" />
+            <marker date="1481879053424" expanded="true" signature="5126:5910" ph="SELECT t1.id... schedule" />
+            <marker date="1481879053424" expanded="true" signature="5126:5911" ph="SELECT * FRO... trains" />
+            <marker date="1481879053424" expanded="true" signature="6859:6866" ph="SELECT t1.id... schedule" />
+            <marker date="1481879053424" expanded="true" signature="6859:7727" ph="SELECT \n `t... schedule" />
+            <marker date="1481879053424" expanded="true" signature="6859:7769" ph="SELECT \n `t... schedule" />
+            <marker date="1481879053424" expanded="true" signature="6859:7787" ph="SELECT \n t1... schedule" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/src.zip!/java/sql/ResultSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="1176" column="37" selection-start-line="1176" selection-start-column="37" selection-end-line="1176" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/6.0.5/mysql-connector-java-6.0.5.jar!/com/mysql/cj/mysqla/result/ResultsetRowsStatic.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding>
+            <element signature="e#1405#1406#0" expanded="true" />
+            <element signature="e#1461#1462#0" expanded="true" />
+            <element signature="e#1931#1932#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/6.0.5/mysql-connector-java-6.0.5.jar!/com/mysql/cj/jdbc/result/ResultSetImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="404">
+          <caret line="1565" column="0" selection-start-line="1565" selection-start-column="0" selection-end-line="1565" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/6.0.5/mysql-connector-java-6.0.5.jar!/com/mysql/cj/jdbc/StatementImpl.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <caret line="1091" column="15" selection-start-line="1091" selection-start-column="15" selection-end-line="1091" selection-end-column="15" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/src.zip!/java/sql/Statement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="89" column="8" selection-start-line="89" selection-start-column="8" selection-end-line="89" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/DelCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+          <folding>
+            <marker date="1481892521863" expanded="true" signature="2750:2806" ph="delete from " />
+            <marker date="1481892521863" expanded="true" signature="3414:3473" ph="delete from " />
+            <marker date="1481892521863" expanded="true" signature="4103:4138" ph="delete from " />
+            <marker date="1481892521863" expanded="true" signature="4103:4154" ph="delete from " />
+            <marker date="1481892521863" expanded="true" signature="4834:4889" ph="delete from " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/CommandController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/AddCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="151" column="12" selection-start-line="151" selection-start-column="12" selection-end-line="157" selection-end-column="13" />
+          <folding>
+            <marker date="1481889116020" expanded="true" signature="3254:3291" ph="INSERT INTO stations... " />
+            <marker date="1481889116020" expanded="true" signature="3254:3326" ph="INSERT INTO stations... " />
+            <marker date="1481889116020" expanded="true" signature="4644:4694" ph="INSERT INTO `routes`... " />
+            <marker date="1481889116020" expanded="true" signature="4644:4714" ph="INSERT INTO `routes`... " />
+            <marker date="1481889116020" expanded="true" signature="4644:4715" ph="INSERT INTO `routes`... " />
+            <marker date="1481889116020" expanded="true" signature="4644:4736" ph="INSERT INTO `routes`... " />
+            <marker date="1481889116020" expanded="true" signature="5829:5888" ph="INSERT INTO `trains`... " />
+            <marker date="1481889116020" expanded="true" signature="7052:7106" ph="select `rout... schedule" />
+            <marker date="1481889116020" expanded="true" signature="9158:9231" ph="insert into `schedule`... " />
+            <marker date="1481889116020" expanded="true" signature="9158:9232" ph="insert into `schedule`... " />
+            <marker date="1481889116020" expanded="true" signature="9158:9250" ph="insert into `schedule`... " />
+            <marker date="1481889116020" expanded="true" signature="9158:9255" ph="insert into `schedule`... " />
+            <marker date="1481889116020" expanded="true" signature="9158:9274" ph="insert into `schedule`... " />
+            <marker date="1481889116020" expanded="true" signature="9158:9297" ph="insert into `schedule`... " />
+            <marker date="1481889116020" expanded="true" signature="9158:9319" ph="insert into `schedule`... " />
+            <marker date="1481889116020" expanded="true" signature="9367:9536" ph="insert into `schedule`... " />
+            <marker date="1481889116020" expanded="true" signature="9367:9537" ph="insert into `schedule`... " />
+            <marker date="1481889116020" expanded="true" signature="9367:9561" ph="insert into `schedule`... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/controller/RouteModelController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="89" column="8" selection-start-line="89" selection-start-column="8" selection-end-line="94" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/src.zip!/java/lang/CharSequence.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="58" column="17" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_92/src.zip!/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="2132" column="42" selection-start-line="2132" selection-start-column="42" selection-end-line="2132" selection-end-column="42" />
+          <folding>
+            <element signature="e#82971#82972#0" expanded="true" />
+            <element signature="e#83020#83021#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/solpro/view/SearchCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="139" column="0" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
+          <folding>
+            <marker date="1481892823359" expanded="true" signature="4519:4572" ph="SELECT * FRO... trains" />
+            <marker date="1481892823359" expanded="true" signature="4519:4588" ph="SELECT * FRO... trains" />
+          </folding>
         </state>
       </provider>
     </entry>

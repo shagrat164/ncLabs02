@@ -6,9 +6,6 @@ package ru.solpro.controller;
 
 import ru.solpro.model.Station;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -21,8 +18,7 @@ import java.util.regex.Pattern;
  * @author Protsvetov Danila
  */
 
-@XmlRootElement(name = "stations")
-public class StationModelController implements ModelController<Station>, Serializable {
+public class StationModelController {
 
     /**
      * Переменная для хранения экземпляра StationModelController.
@@ -65,7 +61,6 @@ public class StationModelController implements ModelController<Station>, Seriali
      * Геттер станций
      * @return Коллекция со станциями
      */
-    @XmlElement(name = "station")
     public TreeSet<Station> getStations() {
         return stations;
     }
@@ -86,7 +81,6 @@ public class StationModelController implements ModelController<Station>, Seriali
      *             и [?] - для пропуска одного символа.
      * @return Список найденных станций
      */
-    @Override
     public ArrayList<Station> search(String find) {
         ArrayList<Station> result = new ArrayList<>();
         if (find.contains("*")) {
@@ -111,7 +105,6 @@ public class StationModelController implements ModelController<Station>, Seriali
      * @param id    id станции для поиска
      * @return      <code>Station</code> или null если станция не найдена
      */
-    @Override
     public Station search(int id) {
         for (Station station : stations) {
             if (station.getId() == id) {
@@ -127,7 +120,6 @@ public class StationModelController implements ModelController<Station>, Seriali
      * @return true - станция успешно удалена
      *         false - станция не найдена для удаления
      */
-    @Override
     public boolean remove(int id) {
         for (Station station : stations) {
             if (station.getId() == id) {
@@ -143,7 +135,6 @@ public class StationModelController implements ModelController<Station>, Seriali
      * @return true - станция успешно удалена
      *         false - станция не найдена для удаления
      */
-    @Override
     public boolean remove(Station station) {
         return stations.remove(station);
     }
@@ -154,7 +145,6 @@ public class StationModelController implements ModelController<Station>, Seriali
      * @return true - станция успешно добавлена
      *         false - станцию невозможно добавить
      */
-    @Override
     public boolean add(Station station) {
         return stations.add(station);
     }

@@ -12,6 +12,9 @@ import ru.solpro.model.Train;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -94,24 +97,27 @@ public class AddCommand extends AlwaysCommand implements Command {
      * @throws IOException
      */
     private void addStation() throws SystemException, IOException {
-        // INSERT INTO stations (name) VALUES ('ВОЛЬСК');
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        StationModelController stationController = StationModelController.getInstance();
+        Database database = new Database();
+        database.connect();
 
         System.out.println("Для завершения операции добавления введите exit.");
         while (true) {
             System.out.print("\tНаименование станции: ");
             String nameStation = reader.readLine();
             if (isExitOperation(nameStation)) {
-                return;
+                break;
             }
-            if (stationController.search(nameStation).isEmpty() && stationController.add(nameStation)) {
-                System.out.println("Станция успешно добавлена.");
-            } else {
-                error("Невозможно добавить станцию. Станция с таким названием существует.");
+            String sql = "INSERT INTO stations (name) VALUES ('" + nameStation.toUpperCase() + "')";
+            try {
+                database.getStatement().executeUpdate(sql);
+            } catch (SQLIntegrityConstraintViolationException e) {
+                System.out.println("Error: Станция с таким названием существует.");
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
             }
         }
+        database.disconnect();
     }
 
     /**
@@ -120,10 +126,10 @@ public class AddCommand extends AlwaysCommand implements Command {
      * @throws IOException
      */
     private void addRoute() throws SystemException, IOException {
-        //  insert into routes (dep_id, arr_id) values (2, 5);
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        RouteModelController routeController = RouteModelController.getInstance();
+        Database database = new Database();
+
+        database.connect();
 
         System.out.println("Для завершения операции добавления введите exit.");
 
@@ -131,23 +137,27 @@ public class AddCommand extends AlwaysCommand implements Command {
             System.out.print("\tid станции отправления: ");
             String s = reader.readLine();
             if (isExitOperation(s)) {
-                return;
+                break;
             }
             Integer idDepStation = Integer.parseInt(s);
 
             System.out.print("\tid станции назначения: ");
             String s2 = reader.readLine();
             if (isExitOperation(s2)) {
-                return;
+                break;
             }
             Integer idArrStation = Integer.parseInt(s2);
 
-            if (routeController.add(idDepStation, idArrStation)) {
-                System.out.println("Маршрут успешно добавлен.");
-            } else {
-                error("Невозможно добавить маршрут.");
+            String sql = "INSERT INTO `routes` (`dep_id`, `arr_id`) values ("+ idDepStation + ", " + idArrStation + ");";
+            try {
+                database.getStatement().executeUpdate(sql);
+            } catch (SQLIntegrityConstraintViolationException e) {
+                System.out.println("Error: Станции не существует.");
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
             }
         }
+        database.disconnect();
     }
 
     /**
@@ -156,10 +166,10 @@ public class AddCommand extends AlwaysCommand implements Command {
      * @throws IOException
      */
     private void addTrain() throws SystemException, IOException {
-        //  insert into trains (number) values (1024);
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        TrainModelController trainModelController = TrainModelController.getInstance();
+        Database database = new Database();
+
+        database.connect();
 
         System.out.println("Для завершения операции добавления введите exit.");
 
@@ -167,17 +177,20 @@ public class AddCommand extends AlwaysCommand implements Command {
             System.out.print("\tНомер поезда: ");
             String strNumberTrain = reader.readLine();
             if (isExitOperation(strNumberTrain)) {
-                return;
+                break;
             }
             Integer numberTrain = Integer.parseInt(strNumberTrain);
+            String sql = "INSERT INTO `trains` (`number`) values ("+ numberTrain + ");";
 
-            if (trainModelController.search(numberTrain) == null &&
-                    trainModelController.add(numberTrain)) {
-                System.out.println("Поезд успешно добавлен.");
-            } else {
-                error("Невозможно добавить поезд.");
+            try {
+                database.getStatement().executeUpdate(sql);
+            } catch (SQLIntegrityConstraintViolationException e) {
+                System.out.println("Error: Поезд с таким номером уже существует.");
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
             }
         }
+        database.disconnect();
     }
 
     /**
@@ -186,11 +199,10 @@ public class AddCommand extends AlwaysCommand implements Command {
      * @throws IOException
      */
     private void addSchedule() throws SystemException, IOException {
-        //  insert into schedule (train_id, route_id, date, hour) values (1, 1, '2016.12.13 21:01', 3);
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        RouteModelController routeModelController = RouteModelController.getInstance();
-        TrainModelController trainModelController = TrainModelController.getInstance();
+        Database database = new Database();
+
+        database.connect();
 
         System.out.println("Для завершения операции добавления введите exit.");
 
@@ -198,33 +210,31 @@ public class AddCommand extends AlwaysCommand implements Command {
             System.out.print("\tНомер поезда: ");
             String strNumberTrain = reader.readLine();
             if (isExitOperation(strNumberTrain)) {
-                return;
+                break;
             }
             Integer numberTrain = Integer.parseInt(strNumberTrain);
-            Train train = trainModelController.search(numberTrain);
-            if (train == null) {
-                error("Невозможно добавить расписание. Поезда с номером " +
-                        numberTrain + " не существует.");
-            }
 
             int routeId = 0;
-            if (train.getTrainTimetable().isEmpty()) {
-                System.out.print("\tУ данного поезда отсутствует маршрут. " +
-                        "Введите id маршрута: ");
-                routeId = Integer.parseInt(reader.readLine());
 
-                if (routeModelController.search(routeId) == null) {
-                    error("Маршрута не существует. Сначала создайте маршрут.");
-                    return;
+            String sql =  "select `route_id` from `schedule` where `train_num` = " + numberTrain + ";";
+
+            try {
+                ResultSet resultSet = database.getStatement().executeQuery(sql);
+                if (resultSet.next()) {
+                    routeId = resultSet.getInt("route_id");
+                } else {
+                    System.out.print("\tУ данного поезда отсутствует маршрут. " +
+                            "Введите id маршрута: ");
+                    routeId = Integer.parseInt(reader.readLine());
                 }
-            } else {
-                routeId = train.getTrainTimetable().first().getRoute().getId();
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
             }
 
             System.out.print("\tДата отправления (dd.mm.yyyy): ");
             String strDateDep = reader.readLine();
             if (isExitOperation(strDateDep)) {
-                return;
+                break;
             }
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate dateDep = LocalDate.parse(strDateDep, dateFormatter);
@@ -232,7 +242,7 @@ public class AddCommand extends AlwaysCommand implements Command {
             System.out.print("\tВремя отправления (hh:mm): ");
             String strTimeDep = reader.readLine();
             if (isExitOperation(strTimeDep)) {
-                return;
+                break;
             }
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
             LocalTime timeDep = LocalTime.parse(strTimeDep, timeFormatter);
@@ -242,9 +252,10 @@ public class AddCommand extends AlwaysCommand implements Command {
             System.out.print("\tВремя движения до конечного пункта (часов): ");
             String strTimeArrHours = reader.readLine();
             if (isExitOperation(strTimeArrHours)) {
-                return;
+                break;
             }
             Integer timeArrHours = Integer.parseInt(strTimeArrHours);
+
             System.out.print("\tВремя движения до конечного пункта (минут): ");
             String strTimeArrMinutes = reader.readLine();
             if ("".equals(strTimeArrMinutes)) {
@@ -252,16 +263,18 @@ public class AddCommand extends AlwaysCommand implements Command {
             }
             Integer timeArrMinutes = Integer.parseInt(strTimeArrMinutes);
 
-            if (timeArrMinutes == 0) {
-                trainModelController.addScheduleLine(routeId,
-                        numberTrain, depDateTime, timeArrHours);
-                System.out.println("Расписание успешно добавлено.");
+            if (timeArrMinutes <= 0) {
+                sql = "insert into `schedule` (`train_num`, `route_id`, `date`, `hour`) values ('" + numberTrain + "', '" + routeId + "', '" + depDateTime + "', '" + timeArrHours + "');";
             } else {
-                trainModelController.addScheduleLine(routeId,
-                        numberTrain, depDateTime, timeArrHours, timeArrMinutes);
-                System.out.println("Расписание успешно добавлено.");
+                sql = "insert into `schedule` (`train_num`, `route_id`, `date`, `hour`, `min`) values ('" + numberTrain + "', '" + routeId + "', '" + depDateTime + "', '" + timeArrHours + "', '" + timeArrMinutes + "');";
+            }
+            try {
+                database.getStatement().executeUpdate(sql);
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
             }
         }
+        database.disconnect();
     }
 
     //проверка на команду выхода из процесса добавления

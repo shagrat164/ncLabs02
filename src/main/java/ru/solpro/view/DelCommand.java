@@ -4,10 +4,7 @@
 
 package ru.solpro.view;
 
-import ru.solpro.controller.TrainModelController;
-import ru.solpro.controller.RouteModelController;
-import ru.solpro.controller.StationModelController;
-import ru.solpro.controller.SystemException;
+import ru.solpro.controller.*;
 import ru.solpro.model.Train;
 import ru.solpro.model.Route;
 import ru.solpro.model.Station;
@@ -15,6 +12,7 @@ import ru.solpro.model.Station;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -92,74 +90,61 @@ public class DelCommand extends AlwaysCommand implements Command {
      * Удаление расписания у поезда
      */
     private void delSchedule() throws IOException, SystemException {
-        //  delete from schedule where id = 1 and train_id = 1;
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        TrainModelController trainModelController = TrainModelController.getInstance();
+        Database database = new Database();
+        database.connect();
 
-        System.out.print("\tВведите номер поезда: ");
-        int numberTrain = Integer.parseInt(reader.readLine());
         System.out.print("\tВведите id расписания: ");
         int idSchedule = Integer.parseInt(reader.readLine());
-        if (!trainModelController.delScheduleLine(idSchedule, numberTrain)) {
-            error("Невозможно удалить строку расписания.");
+        String sql = "delete from `schedule` where `id` = '" + idSchedule + "';";
+
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
         }
+        database.disconnect();
     }
 
     /**
      * Удаление поезда
      */
     private void delTrain() throws IOException, SystemException {
-        //  delete from trains where number = 1024;
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        TrainModelController trainModelController = TrainModelController.getInstance();
+        Database database = new Database();
+        database.connect();
 
         System.out.print("\tВведите номер поезда: ");
         int numberTrain = Integer.parseInt(reader.readLine());
-        if (!trainModelController.remove(numberTrain)) {
-            error("Не найден поезд для удаления.");
+        String sql = "delete from `trains` where `number` = '" + numberTrain + "';";
+
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
         }
+        database.disconnect();
     }
 
     /**
      * Удаление маршрута
      */
     private void delRoute() throws IOException, SystemException {
-        //  delete from routes where id = 7;
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        RouteModelController routeModelController = RouteModelController.getInstance();
-        TrainModelController trainModelController = TrainModelController.getInstance();
+        Database database = new Database();
+        database.connect();
 
         System.out.print("Введите id маршрута который требуется удалить: ");
         int idRoute = Integer.parseInt(reader.readLine());
-        Route route = routeModelController.search(idRoute);
-        if (route == null) {
-            error("Не найден маршрут для удаления.");
-        }
 
-        ArrayList<Train> trains = new ArrayList<>();
-        //проверяются все поезда на совпадение с удаляемой станцией
-        for (Train train : trainModelController.getTrains()) {
-            if (train.getTrainTimetable().isEmpty() ||
-                    train.getTrainTimetable() == null) {
-                continue;
-            }
-            if (train.getTrainTimetable().first().getRoute().equals(route)) {
-                trains.add(train);
-            }
-        }
+        String sql = "delete from `routes` where `id` = '" + idRoute + "';";
 
-        if (!trains.isEmpty()) {
-            System.out.println("\tПо маршруту " + route + " передвигаются поезда с номерами:");
-            for (Train train : trains) {
-                System.out.print(" " + train.getTrainNumber());
-            }
-            error("Удаление маршрута не возможно.");
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
         }
-
-        routeModelController.remove(route);
+        database.disconnect();
     }
 
     /**
@@ -169,36 +154,19 @@ public class DelCommand extends AlwaysCommand implements Command {
         //  delete from stations where id = 7;
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        StationModelController stationModelController = StationModelController.getInstance();
-        RouteModelController routeModelController = RouteModelController.getInstance();
+        Database database = new Database();
+        database.connect();
 
         System.out.print("Введите id станции которую требуется удалить: ");
         int idStation = Integer.parseInt(reader.readLine());
-        Station station = stationModelController.search(idStation);
-        if (station == null) {
-            error("Не найдена станция для удаления.");
-        }
 
-        ArrayList<Route> routes = new ArrayList<>();
-        //проверяются все маршруты на совпадение с удаляемой станцией
-        for (Route route : routeModelController.getRoutes()) {
-            if (route == null) {
-                continue;
-            }
-            if (route.getIdDeparture() == idStation ||
-                    route.getIdArrival() == idStation) {
-                routes.add(route);
-            }
-        }
+        String sql = "delete from `stations` where `id` = '" + idStation + "';";
 
-        if (!routes.isEmpty()) {
-            System.out.println("\tСтанция " + station + " содержится в маршрутах:");
-            for (Route route : routes) {
-                System.out.print(" [" + route.getId() + "] " + route);
-            }
-            error("Удаление станции не возможно.");
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
         }
-
-        stationModelController.remove(station);
+        database.disconnect();
     }
 }

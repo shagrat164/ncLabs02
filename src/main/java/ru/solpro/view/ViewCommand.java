@@ -10,6 +10,8 @@ import ru.solpro.controller.StationModelController;
 import ru.solpro.model.*;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -30,7 +32,7 @@ public class ViewCommand extends AlwaysCommand implements Command {
      * @throws IOException  ошибка ввыода/вывода
      */
     @Override
-    public boolean execute(String[] args) throws SystemException, IOException {
+    public boolean execute(String[] args) throws SystemException, IOException{
         if (args == null) {
             printHelp();
             return true;
@@ -99,93 +101,105 @@ public class ViewCommand extends AlwaysCommand implements Command {
      * Вывод списка всех станций в системе
      */
     private void viewStations() throws SystemException {
-        //  SELECT id, name as `Название` FROM stations;
-
-        StationModelController stationController = StationModelController.getInstance();
-        if (stationController.getStations().isEmpty()) {
-            error("Не определено ни одной станции.");
-            return;
+        String sql = "SELECT `id`, `name` FROM `stations`";
+        Database database = new Database();
+        database.connect();
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.println("[" + resultSet.getInt("id") + "] " + resultSet.getString("name"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        for (Station station : stationController.getStations()) {
-            System.out.println(station.getId() + ". " + station);
-        }
+        database.disconnect();
     }
 
     /**
      * Вывод списка всех маршрутов в системе
      */
     private void viewRoutes() throws SystemException {
-        //  SELECT t1.id, t2.name as 'dep', t3.name as 'arr' FROM routes t1
-        //  JOIN stations t2 ON (t1.dep_id = t2.id)
-        //  JOIN stations t3 ON (t1.arr_id = t3.id);
+        String sql = "SELECT t1.id, t2.name as 'dep', t3.name as 'arr' FROM routes t1 " +
+                    "JOIN stations t2 ON (t1.dep_id = t2.id) " +
+                    "JOIN stations t3 ON (t1.arr_id = t3.id);";
+        Database database = new Database();
 
-        RouteModelController routeController = RouteModelController.getInstance();
-        if (routeController.getRoutes().isEmpty()) {
-            error("Не определено ни одного маршрута.");
-            return;
+        database.connect();
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+
+            while (resultSet.next()) {
+                System.out.println("[" + resultSet.getInt("id") + "] " + resultSet.getString("dep") + "->" + resultSet.getString("arr"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        for (Route route : routeController.getRoutes()) {
-            System.out.println(route.getId() + ". " + route);
-        }
+        database.disconnect();
     }
 
     /**
      * Вывод списка всех поездов в системе
      */
     private void viewTrains() throws SystemException {
-        //  select * from trains;
+        String sql = "SELECT * FROM `trains`";
+        Database database = new Database();
 
-        TrainModelController trainModelController = TrainModelController.getInstance();
-        if (trainModelController.getTrains().isEmpty()) {
-            error("Не определено ни одного поезда.");
-            return;
+        database.connect();
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.println("[" + resultSet.getInt("id") + "] " + resultSet.getString("number"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        for (Train train : trainModelController.getTrains()) {
-            System.out.println(train);
-        }
+        database.disconnect();
     }
 
     /**
      * Расписание всех поездов за ближайшие 24 часа
      */
     private void viewSchedule() throws SystemException {
-        /*
-        SELECT
-            t1.id,
-            t2.number AS 'поезд',
-            t4.name AS 'ст.отпр.',
-            t5.name AS 'ст.приб.',
-            t1.date as 'Вр.отпр.',
-            DATE_ADD(DATE_ADD(t1.date, INTERVAL t1.min MINUTE), INTERVAL t1.hour HOUR) as 'Вр.приб.'
-        FROM
-            schedule t1
-                JOIN
-            trains t2 ON t1.train_id = t2.id
-                JOIN
-            routes t3 ON t1.route_id = t3.id
-                JOIN
-            stations t4 ON t3.dep_id = t4.id
-                JOIN
-            stations t5 ON t3.arr_id = t5.id
-        WHERE
-            t1.date <= DATE_ADD(NOW(), INTERVAL 1 DAY);
-         */
+        String sql = "SELECT " +
+                "t1.id, " +
+                "t2.number AS 'train', " +
+                "t4.name AS 'dep', " +
+                "t5.name AS 'arr', " +
+                "t1.date as 'time_dep', " +
+                "DATE_ADD(DATE_ADD(t1.date, INTERVAL t1.min MINUTE), INTERVAL t1.hour HOUR) as 'time_arr' " +
+                "FROM " +
+                "schedule t1 " +
+                "JOIN " +
+                "trains t2 ON t1.train_num = t2.number " +
+                "JOIN " +
+                "routes t3 ON t1.route_id = t3.id " +
+                "JOIN " +
+                "stations t4 ON t3.dep_id = t4.id " +
+                "JOIN " +
+                "stations t5 ON t3.arr_id = t5.id " +
+                "WHERE " +
+                "t1.date >= DATE_ADD(NOW(), INTERVAL 1 DAY);";
+        Database database = new Database();
 
-        TrainModelController trainModelController = TrainModelController.getInstance();
-        if (trainModelController.getTrains().isEmpty()) {
-            error("Не определено ни одного поезда.");
-            return;
-        }
-
-        LinkedHashMap<Train, ArrayList<Schedule>> result = trainModelController.viewSchedule();
-        Iterator<Map.Entry<Train, ArrayList<Schedule>>> iterator = result.entrySet().iterator();
-
-        while (iterator.hasNext()) {
-            Map.Entry<Train, ArrayList<Schedule>> listEntry = iterator.next();
-            for (Schedule schedule : listEntry.getValue()) {
-                System.out.println(listEntry.getKey() + " " + schedule);
+        database.connect();
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.println("[" + resultSet.getInt("id") + "] " +
+                        "поезд " + resultSet.getInt("train") + " " +
+                        resultSet.getString("dep") + "->" +
+                        resultSet.getString("arr") + " " +
+                        resultSet.getString("time_dep") + " " +
+                        resultSet.getString("time_arr"));
             }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        database.disconnect();
     }
 
     /**
@@ -193,43 +207,42 @@ public class ViewCommand extends AlwaysCommand implements Command {
      * @param numberTrain   номер поезда
      */
     private void viewSchedule(int numberTrain) throws SystemException {
-        /*
-        SELECT
-            t1.id,
-            t2.number AS 'поезд',
-            t4.name AS 'ст.отпр.',
-            t5.name AS 'ст.приб.',
-            t1.date as 'Вр.отпр.',
-            DATE_ADD(DATE_ADD(t1.date, INTERVAL t1.min MINUTE), INTERVAL t1.hour HOUR) as 'Вр.приб.'
-        FROM
-            schedule t1
-                JOIN
-            trains t2 ON t1.train_id = t2.id
-                JOIN
-            routes t3 ON t1.route_id = t3.id
-                JOIN
-            stations t4 ON t3.dep_id = t4.id
-                JOIN
-            stations t5 ON t3.arr_id = t5.id
-        WHERE
-            t2.number = 1000;
-         */
+        String sql = "SELECT \n" +
+                "    `t1`.`id`,\n" +
+                "    `t2`.`number` AS 'train',\n" +
+                "    `t4`.`name` AS 'dep',\n" +
+                "    `t5`.`name` AS 'arr',\n" +
+                "    `t1`.`date` AS 'time_dep',\n" +
+                "    DATE_ADD(DATE_ADD(t1.date, INTERVAL t1.min MINUTE), INTERVAL t1.hour HOUR) AS 'time_arr'\n" +
+                "FROM\n" +
+                "    schedule t1\n" +
+                "        JOIN\n" +
+                "    trains t2 ON `t1`.`train_num` = `t2`.`number`\n" +
+                "        JOIN\n" +
+                "    routes t3 ON `t1`.`route_id` = `t3`.`id`\n" +
+                "        JOIN\n" +
+                "    stations t4 ON `t3`.`dep_id` = `t4`.`id`\n" +
+                "        JOIN\n" +
+                "    stations t5 ON `t3`.`arr_id` = `t5`.`id`\n" +
+                "WHERE\n" +
+                "    `t2`.`number` = '"+ numberTrain +"';";
+        Database database = new Database();
 
-        TrainModelController trainModelController = TrainModelController.getInstance();
-        if (trainModelController.getTrains().isEmpty()) {
-            error("Не определено ни одного поезда.");
-            return;
+        database.connect();
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.println("[" + resultSet.getInt("id") + "] " +
+                        "поезд " + resultSet.getInt("train") + " " +
+                        resultSet.getString("dep") + "->" +
+                        resultSet.getString("arr") + " " +
+                        resultSet.getString("time_dep") + " " +
+                        resultSet.getString("time_arr"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        if (trainModelController.viewSchedule(numberTrain) == null) {
-            error("Поезда с данным номером не существует.");
-            return;
-        }
-        if (trainModelController.viewSchedule(numberTrain).isEmpty()) {
-            error("У поезда нет расписания.");
-            return;
-        }
-        for (Schedule schedule : trainModelController.viewSchedule(numberTrain)) {
-            System.out.println(schedule);
-        }
+        database.disconnect();
     }
 }

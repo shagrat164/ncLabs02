@@ -23,8 +23,7 @@ import java.util.regex.Pattern;
  * @author Protsvetov Danila
  */
 
-@XmlRootElement(name = "routes")
-public class RouteModelController implements ModelController<Route>, Serializable {
+public class RouteModelController {
 
     /**
      * Переменная для хранения экземпляра RouteModelController.
@@ -67,7 +66,6 @@ public class RouteModelController implements ModelController<Route>, Serializabl
      * Геттер маршрутов
      * @return Коллекция <code>Route</code>
      */
-    @XmlElement(name = "route")
     public TreeSet<Route> getRoutes() {
         return routes;
     }
@@ -87,7 +85,6 @@ public class RouteModelController implements ModelController<Route>, Serializabl
      *             и [?] - для пропуска одного символа.
      * @return Список найденных маршрутов
      */
-    @Override
     public ArrayList<Route> search(String find) {
         ArrayList<Route> result = new ArrayList<>();
         if (find.contains("*")) {
@@ -112,7 +109,6 @@ public class RouteModelController implements ModelController<Route>, Serializabl
      * @param id Идентификатор для поиска
      * @return  <code>Route</code> или null если маршрут не найден
      */
-    @Override
     public Route search(int id) {
         for (Route route : routes) {
             if (route.getId() == id) {
@@ -128,7 +124,6 @@ public class RouteModelController implements ModelController<Route>, Serializabl
      * @return true - маршрут успешно удалён
      *         false - маршрут не найден для удаления
      */
-    @Override
     public boolean remove(int id) {
         for (Route route : routes) {
             if (route.getId() == id) {
@@ -144,7 +139,6 @@ public class RouteModelController implements ModelController<Route>, Serializabl
      * @return true - маршрут успешно удалён
      *         false - маршрут не найден для удаления
      */
-    @Override
     public boolean remove(Route route) {
         return routes.remove(route);
     }
@@ -155,7 +149,6 @@ public class RouteModelController implements ModelController<Route>, Serializabl
      * @return true - маршрут успешно добавлен
      *         false - маршрут невозможно добавить
      */
-    @Override
     public boolean add(Route route) {
         return routes.add(route);
     }

@@ -23,8 +23,8 @@ import java.util.TreeSet;
  * @version 1.0 11 декабря 2016
  * @author Protsvetov Danila
  */
-@XmlRootElement(name = "trains")
-public class TrainModelController implements ModelController<Train>, Serializable {
+
+public class TrainModelController {
 
     /**
      * Переменная для хранения экземпляра TrainModelController.
@@ -67,7 +67,6 @@ public class TrainModelController implements ModelController<Train>, Serializabl
      * Геттер поездов.
      * @return Коллекция <code>Train</code>
      */
-    @XmlElement(name = "train")
     public TreeSet<Train> getTrains() {
         return trains;
     }
@@ -87,7 +86,6 @@ public class TrainModelController implements ModelController<Train>, Serializabl
      *             и [?] - для пропуска одного символа.
      * @return  null
      */
-    @Override
     public ArrayList<Train> search(String find) {
         return null;
     }
@@ -97,7 +95,6 @@ public class TrainModelController implements ModelController<Train>, Serializabl
      * @param numberTrain    номер поезда
      * @return <code>Train</code> или null если поезд не найден.
      */
-    @Override
     public Train search(int numberTrain) {
         for (Train train : trains) {
             if (train.getTrainNumber() == numberTrain) {
@@ -113,7 +110,6 @@ public class TrainModelController implements ModelController<Train>, Serializabl
      * @return true - поезд успешно добавлен
      *         false - поезд невозможно добавить
      */
-    @Override
     public boolean add(Train train) {
         return trains.add(train);
     }
@@ -134,7 +130,6 @@ public class TrainModelController implements ModelController<Train>, Serializabl
      * @return true - поезд успешно удалён,
      *         false - поезд невозможно удалить.
      */
-    @Override
     public boolean remove(int number) {
         for (Train train : trains) {
             if (train.getTrainNumber() == number) {
@@ -150,7 +145,6 @@ public class TrainModelController implements ModelController<Train>, Serializabl
      * @return true - успешное удаление,
      *         false - не удалено.
      */
-    @Override
     public boolean remove(Train train) {
         return trains.remove(train);
     }
