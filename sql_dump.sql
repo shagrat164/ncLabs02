@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `itrain` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `itrain`;
 -- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: itrain
@@ -40,7 +42,7 @@ CREATE TABLE `routes` (
 
 LOCK TABLES `routes` WRITE;
 /*!40000 ALTER TABLE `routes` DISABLE KEYS */;
-INSERT INTO `routes` VALUES (1,1,2),(2,1,3),(3,2,4),(4,1,5),(5,1,6),(6,1,7),(7,1,8),(8,19,6);
+INSERT INTO `routes` VALUES (1,1,19),(2,1,3),(3,2,4),(4,1,5),(5,1,6),(6,1,7),(7,1,8),(8,10,19);
 /*!40000 ALTER TABLE `routes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,17 +55,17 @@ DROP TABLE IF EXISTS `schedule`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `schedule` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `train_num` int(10) NOT NULL,
+  `train_id` int(10) NOT NULL,
   `route_id` int(10) NOT NULL,
   `date` datetime NOT NULL,
   `hour` int(10) NOT NULL,
   `min` int(2) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `route_idx` (`route_id`),
-  KEY `train_numx` (`train_num`),
+  KEY `train_idx` (`train_id`),
   CONSTRAINT `route` FOREIGN KEY (`route_id`) REFERENCES `routes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `train` FOREIGN KEY (`train_num`) REFERENCES `trains` (`number`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+  CONSTRAINT `train` FOREIGN KEY (`train_id`) REFERENCES `trains` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +74,7 @@ CREATE TABLE `schedule` (
 
 LOCK TABLES `schedule` WRITE;
 /*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
-INSERT INTO `schedule` VALUES (9,1000,1,'2016-12-14 15:00:00',4,0),(10,1000,1,'2016-12-14 21:00:00',4,0),(11,1000,1,'2016-12-15 15:00:00',4,0),(12,1000,1,'2016-12-15 21:00:00',4,0),(13,1000,1,'2016-12-16 15:00:00',4,0),(14,1000,1,'2016-12-16 21:00:00',4,0),(15,1001,2,'2016-12-14 15:00:00',4,0),(16,1001,2,'2016-12-14 18:00:00',4,0),(17,1001,2,'2016-12-16 15:00:00',4,0),(18,1001,2,'2016-12-14 18:00:00',4,0),(19,1002,3,'2016-12-14 15:00:00',4,0),(20,1002,3,'2016-12-21 18:00:00',18,0),(21,1005,4,'2016-12-15 15:00:00',4,0),(22,1005,4,'2016-12-24 15:00:00',4,0),(23,1030,7,'2016-12-14 15:00:00',14,0),(26,1000,1,'2016-12-13 21:01:00',3,0),(27,1000,1,'2016-12-13 21:01:00',3,0),(28,1020,8,'2016-12-17 09:00:00',5,10),(29,1020,8,'2016-12-16 19:00:00',5,35),(30,1009,4,'2016-12-16 19:45:00',18,35);
+INSERT INTO `schedule` VALUES (31,2,1,'2016-12-16 21:00:00',5,0),(37,2,1,'2016-12-17 21:00:00',5,0),(38,2,1,'2016-12-18 21:00:00',5,0),(39,2,1,'2016-12-19 21:00:00',5,0),(40,2,1,'2016-12-20 21:00:00',5,0),(41,2,1,'2016-12-21 21:00:00',5,0),(47,1,7,'2016-12-17 17:55:00',13,18);
 /*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +99,7 @@ CREATE TABLE `stations` (
 
 LOCK TABLES `stations` WRITE;
 /*!40000 ALTER TABLE `stations` DISABLE KEYS */;
-INSERT INTO `stations` VALUES (3,'АТКАРСК-1'),(4,'БАЛАКОВО'),(5,'БАЛАШОВ'),(11,'ВОЛАПРВСК'),(10,'ВОЛБСК'),(8,'ВОЛЬСК'),(1,'САРАТОВ-1'),(6,'СЕННАЯ'),(14,'СТАНЦИЯ-1'),(19,'СТАНЦИЯ-2'),(7,'ТАРХАНЫ'),(2,'ТАТИЩЕВО');
+INSERT INTO `stations` VALUES (3,'АТКАРСК-1'),(4,'БАЛАКОВО'),(5,'БАЛАШОВ'),(11,'ВОЛАПРВСК'),(10,'ВОЛБСК'),(8,'ВОЛЬСК'),(1,'САРАТОВ-2'),(6,'СЕННАЯ'),(14,'СТАНЦИЯ-1'),(19,'СТАНЦИЯ-2'),(7,'ТАРХАНЫ'),(2,'ТАТИЩЕВО');
 /*!40000 ALTER TABLE `stations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,4 +137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-16 16:54:25
+-- Dump completed on 2016-12-16 22:41:48
