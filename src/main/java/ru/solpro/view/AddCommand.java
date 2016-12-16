@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
  * @version 1.0 11 декабря 2016
  * @author Protsvetov Danila
  */
-public class AddCommand extends AlwaysCommand implements Command {
+public class AddCommand implements Command {
 
     /**
      * Выполнение команды.
@@ -148,7 +148,7 @@ public class AddCommand extends AlwaysCommand implements Command {
             }
             Integer idArrStation = Integer.parseInt(s2);
 
-            String sql = "INSERT INTO `routes` (`dep_id`, `arr_id`) values ("+ idDepStation + ", " + idArrStation + ");";
+            String sql = "INSERT INTO `routes` (`dep_id`, `arr_id`) VALUES ("+ idDepStation + ", " + idArrStation + ");";
             try {
                 database.getStatement().executeUpdate(sql);
             } catch (SQLIntegrityConstraintViolationException e) {
@@ -264,9 +264,9 @@ public class AddCommand extends AlwaysCommand implements Command {
             Integer timeArrMinutes = Integer.parseInt(strTimeArrMinutes);
 
             if (timeArrMinutes <= 0) {
-                sql = "insert into `schedule` (`train_num`, `route_id`, `date`, `hour`) values ('" + numberTrain + "', '" + routeId + "', '" + depDateTime + "', '" + timeArrHours + "');";
+                sql = "insert into `schedule` (`train_id`, `route_id`, `date`, `hour`) values ('" + numberTrain + "', '" + routeId + "', '" + depDateTime + "', '" + timeArrHours + "');";
             } else {
-                sql = "insert into `schedule` (`train_num`, `route_id`, `date`, `hour`, `min`) values ('" + numberTrain + "', '" + routeId + "', '" + depDateTime + "', '" + timeArrHours + "', '" + timeArrMinutes + "');";
+                sql = "insert into `schedule` (`train_id`, `route_id`, `date`, `hour`, `min`) values ('" + numberTrain + "', '" + routeId + "', '" + depDateTime + "', '" + timeArrHours + "', '" + timeArrMinutes + "');";
             }
             try {
                 database.getStatement().executeUpdate(sql);

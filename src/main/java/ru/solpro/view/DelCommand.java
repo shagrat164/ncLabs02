@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @version 1.0 11 декабря 2016
  * @author Protsvetov Danila
  */
-public class DelCommand extends AlwaysCommand implements Command {
+public class DelCommand implements Command {
 
     /**
      * Выполнение команды.

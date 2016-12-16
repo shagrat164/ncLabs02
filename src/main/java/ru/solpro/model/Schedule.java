@@ -4,8 +4,6 @@
 
 package ru.solpro.model;
 
-import ru.solpro.controller.adapter.LocalDateTimeAdapter;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
@@ -150,7 +148,6 @@ public class Schedule implements Comparable<Schedule>, Serializable {
      * Геттер
      * @return дата/время отправления.
      */
-    @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
     public LocalDateTime getDepartureDateTime() {
         return departureDateTime;
     }

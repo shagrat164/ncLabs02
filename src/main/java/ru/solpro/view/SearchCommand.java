@@ -87,47 +87,66 @@ public class SearchCommand implements Command {
 	 * Поиск станции.
 	 */
     private void searchStation() throws IOException {
-        //  SELECT * FROM `itrain`.`stations` WHERE `name` LIKE 'ВОЛ_СК';
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        StationModelController stationController = StationModelController.getInstance();
+        Database database = new Database();
+        database.connect();
 
         System.out.print("\tВведите строку для поиска: ");
-        String string = reader.readLine();
-        ArrayList<Station> result = stationController.search(string);
-        System.out.println("\tРезультат поиска:");
-        if (result.isEmpty()) {
-            System.out.println("\tНичего не найдено.");
-            return;
+        String strFind = reader.readLine();
+        if (strFind.contains("*")) {
+            strFind = strFind.replace("*", "%");
         }
-        for (Station station : result) {
-            System.out.println("\t[" + station.getId() + "] " + station);
+        if (strFind.contains("?")) {
+            strFind = strFind.replace("?", "_");
         }
+
+        String sql = "SELECT * FROM `itrain`.`stations` WHERE `name` LIKE '" + strFind + "';";
+
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.print("[" + resultSet.getInt("id") + "] " + resultSet.getString("name"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        database.disconnect();
     }
 
 	/**
 	 * Поиск маршрута.
 	 */
     private void searchRoute() throws IOException {
-        //  select `t1`.`id`, `t2`.`name`, `t3`.`name` from `itrain`.`routes` t1
-        //  join `itrain`.`stations` t2 on `t1`.`dep_id` = `t2`.`id`
-        //  join `itrain`.`stations` t3 on `t1`.`arr_id` = `t3`.`id`
-        //  where `t2`.`name` LIKE 'САР%' OR `t3`.`name` LIKE '%ОВ%';
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        RouteModelController routeController = RouteModelController.getInstance();
+        Database database = new Database();
+        database.connect();
 
         System.out.print("\tВведите строку для поиска: ");
-        String string = reader.readLine();
-        ArrayList<Route> result = routeController.search(string);
-        System.out.println("\tРезультат поиска:");
-        if (result.isEmpty()) {
-            System.out.println("\tНичего не найдено.");
-            return;
+        String strFind = reader.readLine();
+        if (strFind.contains("*")) {
+            strFind = strFind.replace("*", "%");
         }
-        for (Route route : result) {
-            System.out.println("\t[" + route.getId() + "] " + route);
+        if (strFind.contains("?")) {
+            strFind = strFind.replace("?", "_");
         }
+
+        String sql = "select `t1`.`id`, `t2`.`name` as 'dep_name', `t3`.`name` as 'arr_name' " +
+                "from `itrain`.`routes` t1 " +
+                "join `itrain`.`stations` t2 on `t1`.`dep_id` = `t2`.`id` " +
+                "join `itrain`.`stations` t3 on `t1`.`arr_id` = `t3`.`id` " +
+                "where `t2`.`name` LIKE '" + strFind + "' OR `t3`.`name` LIKE '" + strFind + "';";
+
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.println("[" + resultSet.getInt("id") + "] " + resultSet.getString("dep_name") + "->" + resultSet.getString("arr_name"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+        database.disconnect();
     }
 
 	/**
@@ -154,8 +173,10 @@ public class SearchCommand implements Command {
             while (resultSet.next()) {
                 System.out.print("[" + resultSet.getInt("id") + "] " + resultSet.getString("number"));
             }
+            resultSet.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e);
         }
+        database.disconnect();
     }
 }

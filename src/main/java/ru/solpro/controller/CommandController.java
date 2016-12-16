@@ -54,11 +54,11 @@ public class CommandController {
         cmd = new DelCommand();
         commands.put(cmd.getName(), cmd);
 
-//        cmd = new SearchCommand();
-//        commands.put(cmd.getName(), cmd);
-//
-//        cmd = new EditCommand();
-//        commands.put(cmd.getName(), cmd);
+        cmd = new SearchCommand();
+        commands.put(cmd.getName(), cmd);
+
+        cmd = new EditCommand();
+        commands.put(cmd.getName(), cmd);
     }
 
     /**
@@ -82,6 +82,8 @@ public class CommandController {
                 }
                 result = cmd.execute(parsedCommand.args);
             } catch (IOException e) {
+                System.out.println("Error: " + e);
+            } catch (NumberFormatException e) {
                 System.out.println("Error: " + e);
             } catch (SystemException e) {
                 System.out.println("Error: " + e);

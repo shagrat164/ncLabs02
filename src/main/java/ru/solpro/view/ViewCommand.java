@@ -22,7 +22,7 @@ import java.util.Map;
  * @version 1.0 11 декабря 2016
  * @author Protsvetov Danila
  */
-public class ViewCommand extends AlwaysCommand implements Command {
+public class ViewCommand implements Command {
 
     /**
      * Выполнение команды.
@@ -173,7 +173,7 @@ public class ViewCommand extends AlwaysCommand implements Command {
                 "FROM " +
                 "schedule t1 " +
                 "JOIN " +
-                "trains t2 ON t1.train_num = t2.number " +
+                "trains t2 ON t1.train_id = t2.id " +
                 "JOIN " +
                 "routes t3 ON t1.route_id = t3.id " +
                 "JOIN " +
@@ -191,7 +191,7 @@ public class ViewCommand extends AlwaysCommand implements Command {
                 System.out.println("[" + resultSet.getInt("id") + "] " +
                         "поезд " + resultSet.getInt("train") + " " +
                         resultSet.getString("dep") + "->" +
-                        resultSet.getString("arr") + " " +
+                        resultSet.getString("arr") + " \t" +
                         resultSet.getString("time_dep") + " " +
                         resultSet.getString("time_arr"));
             }
@@ -217,7 +217,7 @@ public class ViewCommand extends AlwaysCommand implements Command {
                 "FROM\n" +
                 "    schedule t1\n" +
                 "        JOIN\n" +
-                "    trains t2 ON `t1`.`train_num` = `t2`.`number`\n" +
+                "    trains t2 ON `t1`.`train_id` = `t2`.`id`\n" +
                 "        JOIN\n" +
                 "    routes t3 ON `t1`.`route_id` = `t3`.`id`\n" +
                 "        JOIN\n" +

@@ -4,10 +4,7 @@
 
 package ru.solpro.view;
 
-import ru.solpro.controller.TrainModelController;
-import ru.solpro.controller.RouteModelController;
-import ru.solpro.controller.StationModelController;
-import ru.solpro.controller.SystemException;
+import ru.solpro.controller.*;
 import ru.solpro.model.Train;
 import ru.solpro.model.Route;
 import ru.solpro.model.Schedule;
@@ -16,6 +13,8 @@ import ru.solpro.model.Station;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,7 +25,7 @@ import java.time.format.DateTimeFormatter;
  * @version 1.0 11 декабря 2016
  * @author Protsvetov Danila
  */
-public class EditCommand extends AlwaysCommand implements Command {
+public class EditCommand implements Command {
 
     /**
      * Выполнение команды.
@@ -88,79 +87,77 @@ public class EditCommand extends AlwaysCommand implements Command {
         return "Редактирование данных.";
     }
 
-    private void editTrain() throws IOException, SystemException {
-        // получить id записи номера поезда:
-        // SELECT `id` FROM `itrain`.`trains` WHERE `number`='1030';
-        // обновить номер поезда:
-        // UPDATE `itrain`.`trains` SET `number`='1031' WHERE `id`='11';
-
+    private void editTrain() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        RouteModelController routeModelController = RouteModelController.getInstance();
-        TrainModelController trainModelController = TrainModelController.getInstance();
+        Database database = new Database();
+        String sql;
+
+        database.connect();
 
         System.out.print("\tВведите номер поезда для редактирования: ");
-        Integer numberTrain = Integer.parseInt(reader.readLine());
-        Train editTrain = trainModelController.search(numberTrain);
-        if (editTrain == null) {
-            error("Не найден поезд для редактирования.");
+        int numberTrain = Integer.parseInt(reader.readLine());
+        int idTrain = 0;
+
+        sql = "SELECT `id` FROM `itrain`.`trains` WHERE `number`='" + numberTrain + "';";
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            if (resultSet.next()) {
+                idTrain = resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
         }
-        System.out.println("\tВыбран поезд: " + editTrain);
 
         System.out.print("\tВведите новый номер поезда " +
                 "(если изменять не нужно, оставте поле пустым): ");
         String str1 = reader.readLine();
-        Integer newNumberTrain;
-        if ("".equals(str1)) {
-            newNumberTrain = editTrain.getTrainNumber();
-        } else {
-            newNumberTrain = Integer.parseInt(str1);
+        int newTrainNumber = 0;
+        if (!"".equals(str1)) {
+            newTrainNumber = Integer.parseInt(str1);
+            sql = "UPDATE `itrain`.`trains` SET `number`='"+ newTrainNumber + "' WHERE `id`='" + idTrain + "';";
+            try {
+                database.getStatement().executeUpdate(sql);
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
+            }
         }
 
         System.out.print("\tВведите новый id маршрута " +
                 "(если изменять не нужно, оставте поле пустым): ");
         String str2 = reader.readLine();
-        Integer newRouteId;
-        if ("".equals(str2)) {
-            newRouteId = editTrain.getTrainTimetable().last().getRoute().getId();
-        } else {
-            newRouteId = Integer.parseInt(str2);
-            Route route = routeModelController.search(newRouteId);
-            if (route == null) {
-                error("Маршрут не найден.");
+        if (!"".equals(str2)) {
+            int newIdRoute = Integer.parseInt(str2);
+            sql = "DELETE FROM `itrain`.`schedule` WHERE `train_id`='" + idTrain + "';";
+            try {
+                database.getStatement().executeUpdate(sql);
+                editTrainRoute(database, idTrain, newIdRoute);
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
             }
-            editTrain.clearTrainTimetable();
-            editTrainRoute(editTrain, route);
         }
-
-        for (Schedule schedule : editTrain.getTrainTimetable()) {
-            schedule.setRoute(routeModelController.search(newRouteId));
-        }
-        editTrain.setTrainNumber(newNumberTrain);
+        database.disconnect();
     }
 
     /**
      * Меняет маршрут и добавляет первую дату в расписание.
      * @throws IOException
-     * @throws SystemException
      */
-    private void editTrainRoute(Train train,
-                                Route routeId) throws IOException, SystemException {
+    private void editTrainRoute(Database database, int idTrain, int idRoute) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        TrainModelController trainModelController = TrainModelController.getInstance();
+        String sql;
 
         System.out.println("\tПосле изменения маршрута " +
                 "необходимо добавить запись в расписание.");
         System.out.print("\tДата отправления (dd.mm.yyyy): ");
         String strDateDep = reader.readLine();
-
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate dateDep = LocalDate.parse(strDateDep, dateFormatter);
 
         System.out.print("\tВремя отправления (hh:mm): ");
         String strTimeDep = reader.readLine();
-
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime timeDep = LocalTime.parse(strTimeDep, timeFormatter);
+
         LocalDateTime depDateTime = LocalDateTime.of(dateDep, timeDep);
 
         System.out.print("\tВремя движения до конечного пункта (часов): ");
@@ -174,87 +171,85 @@ public class EditCommand extends AlwaysCommand implements Command {
         }
         Integer timeArrMinutes = Integer.parseInt(strTimeArrMinutes);
 
-        if (timeArrMinutes == 0) {
-            trainModelController.addScheduleLine(routeId.getId(),
-                    train.getTrainNumber(), depDateTime, timeArrHours);
+        if (timeArrMinutes <= 0) {
+            sql = "INSERT INTO `schedule` (`train_id`, `route_id`, `date`, `hour`) VALUES ('" + idTrain + "', '" + idRoute + "', '" + depDateTime + "', '" + timeArrHours + "');";
         } else {
-            trainModelController.addScheduleLine(routeId.getId(),
-                    train.getTrainNumber(), depDateTime, timeArrHours, timeArrMinutes);
+            sql = "INSERT INTO `schedule` (`train_id`, `route_id`, `date`, `hour`, `min`) VALUES ('" + idTrain + "', '" + idRoute + "', '" + depDateTime + "', '" + timeArrHours + "', '" + timeArrMinutes + "');";
         }
-        System.out.println("Расписание успешно добавлено.");
+        try {
+            database.getStatement().executeUpdate(sql);
+            System.out.println("Расписание успешно добавлено.");
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+//        database.disconnect();
     }
 
 	/**
 	 * Редактирование маршрута.
 	 */
-    private void editRoute() throws IOException, SystemException {
-        //  #UPDATE `itrain`.`routes` SET `dep_id`='2' WHERE `id`='3';
-        //  #UPDATE `itrain`.`routes` SET `dep_id`='3', `arr_id`='8' WHERE `id`='3';
-
+    private void editRoute() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        StationModelController stationModelController = StationModelController.getInstance();
-        RouteModelController routeModelController = RouteModelController.getInstance();
+        Database database = new Database();
+        database.connect();
 
         System.out.print("\tВведите id маршрута для редактирования: ");
         Integer number = Integer.parseInt(reader.readLine());
-        Route editRoute = routeModelController.search(number);
-        if (editRoute == null) {
-            error("Не найден маршрут для редактирования.");
-        }
 
         System.out.print("\tВведите новый id станции отправления " +
                 "(если изменять не нужно, оставте поле пустым): ");
-        String str1 = reader.readLine();
-        Integer newIdDepSt;
-        if ("".equals(str1)) {
-            newIdDepSt = editRoute.getIdDeparture();
-        } else {
-            newIdDepSt = Integer.parseInt(str1);
+        String strIdDep = reader.readLine();
+        if ("".equals(strIdDep)) {
+            strIdDep = "0";
         }
-        Station newDepSt = stationModelController.search(newIdDepSt);
-        if (newDepSt == null) {
-            error("Станция с id=" + newIdDepSt + " не найдена.");
-        }
+        Integer idDep = Integer.parseInt(strIdDep);
 
         System.out.print("\tВведите новый id станции назначения " +
                 "(если изменять не нужно, оставте поле пустым): ");
-        String str2 = reader.readLine();
-        Integer newIdArrSt;
-        if ("".equals(str2)) {
-            newIdArrSt = editRoute.getIdArrival();
-        } else {
-            newIdArrSt = Integer.parseInt(str2);
+        String strIdArr = reader.readLine();
+        if ("".equals(strIdArr)) {
+            strIdArr = "0";
         }
-        Station newArrSt = stationModelController.search(newIdArrSt);
-        if (newArrSt == null) {
-            error("Станция с id=" + newIdArrSt + " не найдена.");
+        Integer idArr = Integer.parseInt(strIdArr);
+
+        String sql;
+        if (idDep > 0 && idArr == 0) {
+            sql = "UPDATE `itrain`.`routes` SET `dep_id`='" + idDep + "' WHERE `id`='" + number + "';";
+        } else if (idDep == 0 && idArr > 0) {
+            sql = "UPDATE `itrain`.`routes` SET `arr_id`='" + idArr + "' WHERE `id`='" + number + "';";
+        } else {
+            sql = "UPDATE `itrain`.`routes` SET `dep_id`='" + idDep + "', `arr_id`='" + idArr + "' WHERE `id`='" + number + "';";
         }
 
-        editRoute.setIdDeparture(newIdDepSt);
-        editRoute.setIdArrival(newIdArrSt);
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+
+        database.disconnect();
     }
 
 	/**
 	 * Редактирование станции.
 	 */
-    private void editStation() throws IOException, SystemException {
-        //  UPDATE `itrain`.`stations` SET `name`='АТКАРСК-1' WHERE `id`='3';
-
+    private void editStation() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        StationModelController stationModelController = StationModelController.getInstance();
+        Database database = new Database();
+        database.connect();
 
         System.out.print("\tВведите номер станции для редактирования: ");
-        Integer number = Integer.parseInt(reader.readLine());
-        Station editStation = stationModelController.search(number);
-        if (editStation == null) {
-            error("Не найдена станция для редактирования.");
-        }
+        String idStation = reader.readLine();
         System.out.print("\tВведите новое название станции: ");
         String newNameStation = reader.readLine();
-        if (!stationModelController.search(newNameStation).isEmpty()) {
-            error("Такое название уже существует.");
+        String sql = "UPDATE `itrain`.`stations` SET `name`='" + newNameStation + "' WHERE `id`='" + idStation + "';";
+
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
         }
-        editStation.setNameStation(newNameStation.toUpperCase());
-        System.out.println("\tРеадктирование завершено.");
+
+        database.disconnect();
     }
 }
