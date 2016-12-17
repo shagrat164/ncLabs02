@@ -5,12 +5,14 @@
 package ru.solpro.view;
 
 import ru.solpro.controller.*;
+import ru.solpro.model.Route;
+import ru.solpro.model.Station;
+import ru.solpro.model.Train;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Команда поиска.
@@ -87,7 +89,15 @@ public class SearchCommand implements Command {
         System.out.print("\tВведите строку для поиска: ");
         String strFind = reader.readLine();
 
-        stationModelController.searchStation(strFind);
+        ArrayList<Station> result = stationModelController.searchStation(strFind);
+
+        if (!result.isEmpty()) {
+            for (Station station : result) {
+                System.out.println(station);
+            }
+        } else {
+            System.out.println("По запросу ничего не найдено.");
+        }
     }
 
 	/**
@@ -100,7 +110,15 @@ public class SearchCommand implements Command {
         System.out.print("\tВведите строку для поиска: ");
         String strFind = reader.readLine();
 
-        routeModelController.searchRoute(strFind);
+        ArrayList<Route> result = routeModelController.searchRoute(strFind);
+
+        if (!result.isEmpty()) {
+            for (Route route : result) {
+                System.out.println(route);
+            }
+        } else {
+            System.out.println("По запросу ничего не найдено.");
+        }
     }
 
 	/**
@@ -113,6 +131,14 @@ public class SearchCommand implements Command {
         System.out.print("\tВведите номер поезда: ");
         String strFind = reader.readLine();
 
-        trainModelController.searchTrain(strFind);
+        ArrayList<Train> result = trainModelController.searchTrain(strFind);
+
+        if (!result.isEmpty()) {
+            for (Train train : result) {
+                System.out.println(train);
+            }
+        } else {
+            System.out.println("По запросу ничего не найдено.");
+        }
     }
 }

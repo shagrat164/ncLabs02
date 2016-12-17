@@ -5,10 +5,15 @@
 package ru.solpro.view;
 
 import ru.solpro.controller.*;
+import ru.solpro.model.Route;
+import ru.solpro.model.Schedule;
+import ru.solpro.model.Station;
+import ru.solpro.model.Train;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Команда просмотра.
@@ -94,7 +99,15 @@ public class ViewCommand implements Command {
      */
     private void viewStations() {
         StationModelController stationModelController = StationModelController.getInstance();
-        stationModelController.viewStation();
+        ArrayList<Station> result = stationModelController.viewStation();
+
+        if (!result.isEmpty()) {
+            for (Station station : result) {
+                System.out.println(station);
+            }
+        } else {
+            System.out.println("Не определено ни одной станции.");
+        }
     }
 
     /**
@@ -102,7 +115,15 @@ public class ViewCommand implements Command {
      */
     private void viewRoutes() {
         RouteModelController routeModelController = RouteModelController.getInstance();
-        routeModelController.viewRoute();
+        ArrayList<Route> result = routeModelController.viewRoute();
+
+        if (!result.isEmpty()) {
+            for (Route route : result) {
+                System.out.println(route);
+            }
+        } else {
+            System.out.println("Не определено ни одного маршрута.");
+        }
     }
 
     /**
@@ -110,7 +131,20 @@ public class ViewCommand implements Command {
      */
     private void viewTrains() {
         TrainModelController trainModelController = TrainModelController.getInstance();
-        trainModelController.viewTrain();
+        LinkedHashMap<Train, Route> result = trainModelController.viewTrain();
+
+        if (!result.isEmpty()) {
+            for (Map.Entry<Train, Route> trainRouteEntry : result.entrySet()) {
+                System.out.print(trainRouteEntry.getKey());
+                if (trainRouteEntry.getValue() != null) {
+                    System.out.println("\t" + trainRouteEntry.getValue());
+                } else {
+                    System.out.println("\tМаршрут не определён.");
+                }
+            }
+        } else {
+            System.out.println("Не определено ни одного поезда.");
+        }
     }
 
     /**
@@ -118,7 +152,15 @@ public class ViewCommand implements Command {
      */
     private void viewSchedule() {
         ScheduleModelController scheduleModelController = ScheduleModelController.getInstance();
-        scheduleModelController.viewSchedule();
+        ArrayList<Schedule> result = scheduleModelController.viewSchedule();
+
+        if (!result.isEmpty()) {
+            for (Schedule schedule : result) {
+                System.out.println(schedule);
+            }
+        } else {
+            System.out.println("Расписания нет.");
+        }
     }
 
     /**
@@ -127,6 +169,14 @@ public class ViewCommand implements Command {
      */
     private void viewSchedule(int numberTrain) {
         ScheduleModelController scheduleModelController = ScheduleModelController.getInstance();
-        scheduleModelController.viewSchedule(numberTrain);
+        ArrayList<Schedule> result = scheduleModelController.viewSchedule(numberTrain);
+
+        if (!result.isEmpty()) {
+            for (Schedule schedule : result) {
+                System.out.println(schedule);
+            }
+        } else {
+            System.out.println("Расписания нет.");
+        }
     }
 }

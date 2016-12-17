@@ -33,7 +33,7 @@ CREATE TABLE `routes` (
   KEY `arr_idx` (`arr_id`),
   CONSTRAINT `arr` FOREIGN KEY (`arr_id`) REFERENCES `stations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `dep` FOREIGN KEY (`dep_id`) REFERENCES `stations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `routes` (
 
 LOCK TABLES `routes` WRITE;
 /*!40000 ALTER TABLE `routes` DISABLE KEYS */;
-INSERT INTO `routes` VALUES (1,1,19),(2,1,3),(3,2,4),(4,1,5),(5,1,6),(6,1,7),(7,1,8),(8,10,19);
+INSERT INTO `routes` VALUES (1,1,19),(2,1,3),(3,2,4),(4,1,5),(5,1,6),(6,1,7),(7,1,8),(9,11,20);
 /*!40000 ALTER TABLE `routes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +65,7 @@ CREATE TABLE `schedule` (
   KEY `train_idx` (`train_id`),
   CONSTRAINT `route` FOREIGN KEY (`route_id`) REFERENCES `routes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `train` FOREIGN KEY (`train_id`) REFERENCES `trains` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `schedule` (
 
 LOCK TABLES `schedule` WRITE;
 /*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
-INSERT INTO `schedule` VALUES (31,2,1,'2016-12-16 21:00:00',5,0),(37,2,1,'2016-12-17 21:00:00',5,0),(38,2,1,'2016-12-18 21:00:00',5,0),(39,2,1,'2016-12-19 21:00:00',5,0),(40,2,1,'2016-12-20 21:00:00',5,0),(41,2,1,'2016-12-21 21:00:00',5,0),(47,1,7,'2016-12-17 17:55:00',13,18);
+INSERT INTO `schedule` VALUES (37,2,1,'2016-12-17 21:00:00',5,0),(38,2,1,'2016-12-18 21:00:00',5,0),(39,2,1,'2016-12-19 21:00:00',5,0),(40,2,1,'2016-12-20 21:00:00',5,0),(41,2,1,'2016-12-21 21:00:00',5,0),(47,1,7,'2016-12-17 17:55:00',13,18),(48,13,5,'2016-12-18 11:00:00',4,0);
 /*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +90,7 @@ CREATE TABLE `stations` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +99,7 @@ CREATE TABLE `stations` (
 
 LOCK TABLES `stations` WRITE;
 /*!40000 ALTER TABLE `stations` DISABLE KEYS */;
-INSERT INTO `stations` VALUES (3,'АТКАРСК-1'),(4,'БАЛАКОВО'),(5,'БАЛАШОВ'),(11,'ВОЛАПРВСК'),(10,'ВОЛБСК'),(8,'ВОЛЬСК'),(1,'САРАТОВ-2'),(6,'СЕННАЯ'),(14,'СТАНЦИЯ-1'),(19,'СТАНЦИЯ-2'),(7,'ТАРХАНЫ'),(2,'ТАТИЩЕВО');
+INSERT INTO `stations` VALUES (19,'735км'),(3,'АТКАРСК-1'),(4,'БАЛАКОВО'),(5,'БАЛАШОВ'),(11,'ВОЛАПРВСК'),(10,'ВОЛБСК'),(8,'ВОЛЬСК'),(1,'САРАТОВ-2'),(6,'СЕННАЯ'),(20,'СТАНЦИЯ'),(7,'ТАРХАНЫ'),(2,'ТАТИЩЕВО');
 /*!40000 ALTER TABLE `stations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,4 +137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-16 22:41:48
+-- Dump completed on 2016-12-17 21:31:00

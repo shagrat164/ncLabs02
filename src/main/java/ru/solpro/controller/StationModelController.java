@@ -5,10 +5,12 @@
 package ru.solpro.controller;
 
 import ru.solpro.MainApp;
+import ru.solpro.model.Station;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 
 /**
  * Контроллер для работы с моделью <code>Station</code> (станция)
@@ -43,8 +45,9 @@ public class StationModelController {
         return instance;
     }
 
-    public void addStation(String nameStation) {
-        String sql = "INSERT INTO stations (name) VALUES ('" + nameStation.toUpperCase() + "')";
+    public void addStation(String name) {
+        String sql = "INSERT INTO stations (name) " +
+                "VALUES ('" + name.toUpperCase() + "')";
         try {
             database.getStatement().executeUpdate(sql);
         } catch (SQLIntegrityConstraintViolationException e) {
@@ -57,12 +60,17 @@ public class StationModelController {
         }
     }
 
-    public void viewStation() {
+    public ArrayList<Station> viewStation() {
+        ArrayList<Station> result = new ArrayList<>();
         String sql = "SELECT `id`, `name` FROM `stations`";
+
         try {
             ResultSet resultSet = database.getStatement().executeQuery(sql);
             while (resultSet.next()) {
-                System.out.println("[" + resultSet.getInt("id") + "] " + resultSet.getString("name"));
+                Station station = new Station();
+                station.setId(resultSet.getInt("id"));
+                station.setName(resultSet.getString("name"));
+                result.add(station);
             }
             resultSet.close();
         } catch (SQLException e) {
@@ -71,10 +79,11 @@ public class StationModelController {
                 System.out.println(sql);
             }
         }
+        return result;
     }
 
-    public void editStation(int idStation, String newNameStation) {
-        String sql = "UPDATE `itrain`.`stations` SET `name`='" + newNameStation + "' WHERE `id`='" + idStation + "';";
+    public void editStation(int id, String name) {
+        String sql = "UPDATE `stations` SET `name`='" + name + "' WHERE `id`='" + id + "';";
         try {
             database.getStatement().executeUpdate(sql);
         } catch (SQLException e) {
@@ -85,8 +94,8 @@ public class StationModelController {
         }
     }
 
-    public void deleteStation(int idStation) {
-        String sql = "delete from `stations` where `id` = '" + idStation + "';";
+    public void deleteStation(int id) {
+        String sql = "delete from `stations` where `id` = '" + id + "';";
         try {
             database.getStatement().executeUpdate(sql);
         } catch (SQLIntegrityConstraintViolationException e) {
@@ -99,18 +108,25 @@ public class StationModelController {
         }
     }
 
-    public void searchStation(String strFind) {
-        if (strFind.contains("*")) {
-            strFind = strFind.replace("*", "%");
+    public ArrayList<Station> searchStation(String stringFind) {
+        ArrayList<Station> result = new ArrayList<>();
+
+        if (stringFind.contains("*")) {
+            stringFind = stringFind.replace("*", "%");
         }
-        if (strFind.contains("?")) {
-            strFind = strFind.replace("?", "_");
+        if (stringFind.contains("?")) {
+            stringFind = stringFind.replace("?", "_");
         }
-        String sql = "SELECT * FROM `itrain`.`stations` WHERE `name` LIKE '" + strFind + "';";
+
+        String sql = "SELECT * FROM `stations` WHERE `name` LIKE '" + stringFind + "';";
+
         try {
             ResultSet resultSet = database.getStatement().executeQuery(sql);
             while (resultSet.next()) {
-                System.out.print("[" + resultSet.getInt("id") + "] " + resultSet.getString("name"));
+                Station station = new Station();
+                station.setId(resultSet.getInt("id"));
+                station.setName(resultSet.getString("name"));
+                result.add(station);
             }
             resultSet.close();
         } catch (SQLException e) {
@@ -119,5 +135,7 @@ public class StationModelController {
                 System.out.println(sql);
             }
         }
+
+        return result;
     }
 }

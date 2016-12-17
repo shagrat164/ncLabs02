@@ -5,11 +5,15 @@
 package ru.solpro.controller;
 
 import ru.solpro.MainApp;
+import ru.solpro.model.Route;
+import ru.solpro.model.Train;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * Контроллер для работы с моделью <code>Train</code> (поезд).
@@ -45,6 +49,10 @@ public class TrainModelController {
         return ourInstance;
     }
 
+    /**
+     * Добавить поезд.
+     * @param numberTrain    номер поезда.
+     */
     public void addTrain(int numberTrain) {
         String sql = "INSERT INTO `trains` (`number`) values ("+ numberTrain + ");";
         try {
@@ -59,8 +67,12 @@ public class TrainModelController {
         }
     }
 
+    /**
+     * Удаление поезда.
+     * @param numberTrain    номер поезда.
+     */
     public void deleteTrain(int numberTrain) {
-        // оставить так?
+        //TODO: оставить так?
         // или необходимо удалять расписание внутри метода
         // не пользуясь контроллером расписания?
         ScheduleModelController.getInstance().deleteScheduleTrain(getTrainId(numberTrain));
@@ -76,18 +88,27 @@ public class TrainModelController {
         }
     }
 
-    public void searchTrain(String strFind) {
+    /**
+     * Поиск поезда
+     * @param strFind    строка поиска.
+     */
+    public ArrayList<Train> searchTrain(String strFind) {
+        ArrayList<Train> result = new ArrayList<>();
+
         if (strFind.contains("*")) {
             strFind = strFind.replace("*", "%");
         }
         if (strFind.contains("?")) {
             strFind = strFind.replace("?", "_");
         }
-        String sql = "SELECT * FROM `itrain`.`trains` WHERE `number` LIKE '" + strFind + "';";
+        String sql = "SELECT * FROM `trains` WHERE `number` LIKE '" + strFind + "';";
         try {
             ResultSet resultSet = database.getStatement().executeQuery(sql);
             while (resultSet.next()) {
-                System.out.print("[" + resultSet.getInt("id") + "] " + resultSet.getString("number"));
+                Train train = new Train();
+                train.setId(resultSet.getInt("id"));
+                train.setNumber(resultSet.getInt("number"));
+                result.add(train);
             }
             resultSet.close();
         } catch (SQLException e) {
@@ -96,14 +117,46 @@ public class TrainModelController {
                 System.out.println(sql);
             }
         }
+
+        return result;
     }
 
-    public void viewTrain() {
-        String sql = "SELECT * FROM `trains`";
+    /**
+     * Просмотр поездов.
+     */
+    public LinkedHashMap<Train, Route> viewTrain() {
+        LinkedHashMap<Train, Route> result = new LinkedHashMap<>();
+        String sql = "SELECT " +
+                "t1.id, " +
+                "t1.number, " +
+                "t2.route_id, " +
+                "t4.name as 'dep', " +
+                "t5.name as 'arr' " +
+                "FROM `trains` t1 " +
+                "LEFT JOIN `schedule` t2 ON t1.id = t2.train_id " +
+                "LEFT JOIN `routes` t3 ON t2.route_id = t3.id " +
+                "LEFT JOIN `stations` t4 ON t3.dep_id = t4.id " +
+                "LEFT JOIN `stations` t5 ON t3.arr_id = t5.id " +
+                "GROUP BY t1.number;";
+
         try {
             ResultSet resultSet = database.getStatement().executeQuery(sql);
             while (resultSet.next()) {
-                System.out.println("[" + resultSet.getInt("id") + "] " + resultSet.getString("number"));
+                Train train = new Train();
+                Route route = new Route();
+
+                train.setId(resultSet.getInt("id"));
+                train.setNumber(resultSet.getInt("number"));
+
+                if (resultSet.getString("dep") == null || resultSet.getString("arr") == null) {
+                    route = null;
+                } else {
+                    route.setId(resultSet.getInt("route_id"));
+                    route.setDep(resultSet.getString("dep"));
+                    route.setArr(resultSet.getString("arr"));
+                }
+
+                result.put(train, route);
             }
             resultSet.close();
         } catch (SQLException e) {
@@ -112,6 +165,7 @@ public class TrainModelController {
                 System.out.println(sql);
             }
         }
+        return result;
     }
 
     /**
@@ -145,7 +199,7 @@ public class TrainModelController {
      */
     public int getTrainId(int numberTrain) {
         int idTrain = 0;
-        String sql = "SELECT `id` FROM `itrain`.`trains` WHERE `number`='" + numberTrain + "';";
+        String sql = "SELECT `id` FROM `trains` WHERE `number`='" + numberTrain + "';";
         try {
             ResultSet resultSet = database.getStatement().executeQuery(sql);
             if (resultSet.next()) {
@@ -161,7 +215,7 @@ public class TrainModelController {
     }
 
     public void editTrainNumber(int idTrain, int newTrainNumber) {
-        String sql = "UPDATE `itrain`.`trains` SET `number`='"+ newTrainNumber + "' WHERE `id`='" + idTrain + "';";
+        String sql = "UPDATE `trains` SET `number`='"+ newTrainNumber + "' WHERE `id`='" + idTrain + "';";
         try {
             database.getStatement().executeUpdate(sql);
         } catch (SQLException e) {
@@ -172,9 +226,13 @@ public class TrainModelController {
         }
     }
 
-    public void editTrainRoute(int idTrain, int idRoute, LocalDateTime depDateTime, int timeArrHours, int timeArrMinutes) {
+    public void editTrainRoute(int idTrain,
+                               int idRoute,
+                               LocalDateTime depDateTime,
+                               int timeArrHours,
+                               int timeArrMinutes) {
         String sql;
-        sql = "DELETE FROM `itrain`.`schedule` WHERE `train_id`='" + idTrain + "';";
+        sql = "DELETE FROM `schedule` WHERE `train_id`='" + idTrain + "';";
         try {
             database.getStatement().executeUpdate(sql);
         } catch (SQLException e) {
@@ -185,9 +243,13 @@ public class TrainModelController {
         }
 
         if (timeArrMinutes <= 0) {
-            sql = "INSERT INTO `schedule` (`train_id`, `route_id`, `date`, `hour`) VALUES ('" + idTrain + "', '" + idRoute + "', '" + depDateTime + "', '" + timeArrHours + "');";
+            sql = "INSERT INTO `schedule` (`train_id`, `route_id`, `date`, `hour`) " +
+                    "VALUES ('" + idTrain + "', '" + idRoute + "', " +
+                    "'" + depDateTime + "', '" + timeArrHours + "');";
         } else {
-            sql = "INSERT INTO `schedule` (`train_id`, `route_id`, `date`, `hour`, `min`) VALUES ('" + idTrain + "', '" + idRoute + "', '" + depDateTime + "', '" + timeArrHours + "', '" + timeArrMinutes + "');";
+            sql = "INSERT INTO `schedule` (`train_id`, `route_id`, `date`, `hour`, `min`) " +
+                    "VALUES ('" + idTrain + "', '" + idRoute + "', " +
+                    "'" + depDateTime + "', '" + timeArrHours + "', '" + timeArrMinutes + "');";
         }
         try {
             database.getStatement().executeUpdate(sql);

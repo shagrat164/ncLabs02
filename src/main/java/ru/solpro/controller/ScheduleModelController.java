@@ -5,10 +5,12 @@
 package ru.solpro.controller;
 
 import ru.solpro.MainApp;
+import ru.solpro.model.Schedule;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * Created by danila on 17.12.2016.
@@ -52,12 +54,20 @@ public class ScheduleModelController {
      * @param timeArrHours      время движения (часов)
      * @param timeArrMinutes    время движения (минут)
      */
-    public void addSchedule(int trainId, int routeId, LocalDateTime depDateTime, int timeArrHours, int timeArrMinutes) {
+    public void addSchedule(int trainId,
+                            int routeId,
+                            LocalDateTime depDateTime,
+                            int timeArrHours,
+                            int timeArrMinutes) {
         String sql;
         if (timeArrMinutes <= 0) {
-            sql = "insert into `schedule` (`train_id`, `route_id`, `date`, `hour`) values ('" + trainId + "', '" + routeId + "', '" + depDateTime + "', '" + timeArrHours + "');";
+            sql = "INSERT INTO `schedule` (`train_id`, `route_id`, `date`, `hour`) " +
+                    "VALUES ('" + trainId + "', '" + routeId + "', " +
+                    "'" + depDateTime + "', '" + timeArrHours + "');";
         } else {
-            sql = "insert into `schedule` (`train_id`, `route_id`, `date`, `hour`, `min`) values ('" + trainId + "', '" + routeId + "', '" + depDateTime + "', '" + timeArrHours + "', '" + timeArrMinutes + "');";
+            sql = "INSERT INTO `schedule` (`train_id`, `route_id`, `date`, `hour`, `min`) " +
+                    "VALUES ('" + trainId + "', '" + routeId + "', " +
+                    "'" + depDateTime + "', '" + timeArrHours + "', '" + timeArrMinutes + "');";
         }
         try {
             database.getStatement().executeUpdate(sql);
@@ -74,7 +84,8 @@ public class ScheduleModelController {
      * @param idSchedule    id расписания.
      */
     public void deleteSchedule(int idSchedule) {
-        String sql = "delete from `schedule` where `id` = '" + idSchedule + "';";
+        String sql = "DELETE FROM `schedule` " +
+                "WHERE `id` = '" + idSchedule + "';";
         try {
             database.getStatement().executeUpdate(sql);
         } catch (SQLException e) {
@@ -90,7 +101,8 @@ public class ScheduleModelController {
      * @param idTrain    id поезда
      */
     public void deleteScheduleTrain(int idTrain) {
-        String sql = "delete from `schedule` where `train_id` = '" + idTrain + "';";
+        String sql = "DELETE FROM `schedule` " +
+                "WHERE `train_id` = '" + idTrain + "';";
         try {
             database.getStatement().executeUpdate(sql);
         } catch (SQLException e) {
@@ -104,39 +116,34 @@ public class ScheduleModelController {
     /**
      * Расписание всех поездов за ближайшие 24 часа
      */
-    public void viewSchedule() {
-        String sql = "SELECT \n" +
-                "    t1.id,\n" +
-                "    t2.number AS 'train',\n" +
-                "    t4.name AS 'dep',\n" +
-                "    t5.name AS 'arr',\n" +
-                "    t1.date AS 'time_dep',\n" +
-                "    DATE_ADD(DATE_ADD(t1.date,\n" +
-                "            INTERVAL t1.min MINUTE),\n" +
-                "        INTERVAL t1.hour HOUR) AS 'time_arr'\n" +
-                "FROM\n" +
-                "    schedule t1\n" +
-                "        JOIN\n" +
-                "    trains t2 ON t1.train_id = t2.id\n" +
-                "        JOIN\n" +
-                "    routes t3 ON t1.route_id = t3.id\n" +
-                "        JOIN\n" +
-                "    stations t4 ON t3.dep_id = t4.id\n" +
-                "        JOIN\n" +
-                "    stations t5 ON t3.arr_id = t5.id\n" +
-                "WHERE\n" +
-                "    t1.date >= NOW()\n" +
-                "        AND t1.date <= DATE_ADD(NOW(), INTERVAL 1 DAY)\n" +
+    public ArrayList<Schedule> viewSchedule() {
+        ArrayList<Schedule> result = new ArrayList<>();
+        String sql = "SELECT " +
+                "t1.id, " +
+                "t2.number AS 'train', " +
+                "t4.name AS 'dep', " +
+                "t5.name AS 'arr', " +
+                "t1.date AS 'time_dep', " +
+                "DATE_ADD(DATE_ADD(t1.date, INTERVAL t1.min MINUTE), INTERVAL t1.hour HOUR) AS 'time_arr' " +
+                "FROM schedule t1 " +
+                "JOIN trains t2 ON t1.train_id = t2.id " +
+                "JOIN routes t3 ON t1.route_id = t3.id " +
+                "JOIN stations t4 ON t3.dep_id = t4.id " +
+                "JOIN stations t5 ON t3.arr_id = t5.id " +
+                "WHERE t1.date >= NOW() AND t1.date <= DATE_ADD(NOW(), INTERVAL 1 DAY) " +
                 "ORDER BY t1.date;";
+
         try {
             ResultSet resultSet = database.getStatement().executeQuery(sql);
             while (resultSet.next()) {
-                System.out.println("[" + resultSet.getInt("id") + "] " +
-                        "поезд " + resultSet.getInt("train") + " " +
-                        resultSet.getString("dep") + "->" +
-                        resultSet.getString("arr") + " \t" +
-                        resultSet.getString("time_dep") + " " +
-                        resultSet.getString("time_arr"));
+                Schedule schedule = new Schedule();
+                schedule.setId(resultSet.getInt("id"));
+                schedule.setNumbeTrain(resultSet.getInt("train"));
+                schedule.setDep(resultSet.getString("dep"));
+                schedule.setArr(resultSet.getString("arr"));
+                schedule.setTimeDep(resultSet.getString("time_dep"));
+                schedule.setTimeArr(resultSet.getString("time_arr"));
+                result.add(schedule);
             }
             resultSet.close();
         } catch (SQLException e) {
@@ -145,42 +152,42 @@ public class ScheduleModelController {
                 System.out.println(sql);
             }
         }
+
+        return result;
     }
 
     /**
      * Вывод расписания у определённого поезда
      * @param numberTrain   номер поезда
      */
-    public void viewSchedule(int numberTrain) {
-        String sql = "SELECT \n" +
-                "    `t1`.`id`,\n" +
-                "    `t2`.`number` AS 'train',\n" +
-                "    `t4`.`name` AS 'dep',\n" +
-                "    `t5`.`name` AS 'arr',\n" +
-                "    `t1`.`date` AS 'time_dep',\n" +
-                "    DATE_ADD(DATE_ADD(t1.date, INTERVAL t1.min MINUTE), INTERVAL t1.hour HOUR) AS 'time_arr'\n" +
-                "FROM\n" +
-                "    schedule t1\n" +
-                "        JOIN\n" +
-                "    trains t2 ON `t1`.`train_id` = `t2`.`id`\n" +
-                "        JOIN\n" +
-                "    routes t3 ON `t1`.`route_id` = `t3`.`id`\n" +
-                "        JOIN\n" +
-                "    stations t4 ON `t3`.`dep_id` = `t4`.`id`\n" +
-                "        JOIN\n" +
-                "    stations t5 ON `t3`.`arr_id` = `t5`.`id`\n" +
-                "WHERE\n" +
-                "    `t2`.`number` = '"+ numberTrain +"'" +
+    public ArrayList<Schedule> viewSchedule(int numberTrain) {
+        ArrayList<Schedule> result = new ArrayList<>();
+        String sql = "SELECT " +
+                "t1.id, " +
+                "t2.number AS 'train', " +
+                "t4.name AS 'dep', " +
+                "t5.name AS 'arr', " +
+                "t1.date AS 'time_dep', " +
+                "DATE_ADD(DATE_ADD(t1.date, INTERVAL t1.min MINUTE), INTERVAL t1.hour HOUR) AS 'time_arr' " +
+                "FROM schedule t1 " +
+                "JOIN trains t2 ON t1.train_id = t2.id " +
+                "JOIN routes t3 ON t1.route_id = t3.id " +
+                "JOIN stations t4 ON t3.dep_id = t4.id " +
+                "JOIN stations t5 ON t3.arr_id = t5.id " +
+                "WHERE t2.number = '"+ numberTrain +"'" +
                 "ORDER BY t1.date;";
+
         try {
             ResultSet resultSet = database.getStatement().executeQuery(sql);
             while (resultSet.next()) {
-                System.out.println("[" + resultSet.getInt("id") + "] " +
-                        "поезд " + resultSet.getInt("train") + " " +
-                        resultSet.getString("dep") + "->" +
-                        resultSet.getString("arr") + " " +
-                        resultSet.getString("time_dep") + " " +
-                        resultSet.getString("time_arr"));
+                Schedule schedule = new Schedule();
+                schedule.setId(resultSet.getInt("id"));
+                schedule.setNumbeTrain(resultSet.getInt("train"));
+                schedule.setDep(resultSet.getString("dep"));
+                schedule.setArr(resultSet.getString("arr"));
+                schedule.setTimeDep(resultSet.getString("time_dep"));
+                schedule.setTimeArr(resultSet.getString("time_arr"));
+                result.add(schedule);
             }
             resultSet.close();
         } catch (SQLException e) {
@@ -189,5 +196,6 @@ public class ScheduleModelController {
                 System.out.println(sql);
             }
         }
+        return result;
     }
 }

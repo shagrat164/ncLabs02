@@ -47,7 +47,6 @@ public class Database {
             if (statement == null) {
                 statement = connection.createStatement();
             }
-            System.out.println("db connect");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -67,7 +66,6 @@ public class Database {
         if (connection != null) {
             try {
                 connection.close();
-                System.out.println("db disconnect");
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
