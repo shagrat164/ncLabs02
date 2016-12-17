@@ -35,7 +35,7 @@ public class HelpCommand implements Command {
      * @throws IOException  ошибка ввыода/вывода
      */
     @Override
-    public boolean execute(String[] args) throws SystemException, IOException {
+    public boolean execute(String[] args) throws IOException {
         if (args == null) {
             System.out.println("Доступные команды:\n" + MSG_SPLIT);
             for (Command cmd : commands.values()) {

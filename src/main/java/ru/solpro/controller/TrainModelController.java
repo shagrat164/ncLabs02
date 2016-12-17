@@ -4,253 +4,198 @@
 
 package ru.solpro.controller;
 
-import ru.solpro.model.Train;
-import ru.solpro.model.Route;
-import ru.solpro.model.Schedule;
+import ru.solpro.MainApp;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.TreeSet;
 
 /**
  * Контроллер для работы с моделью <code>Train</code> (поезд).
  * Является синглтоном.
- * @see Train
  * @version 1.0 11 декабря 2016
  * @author Protsvetov Danila
  */
-
 public class TrainModelController {
 
     /**
      * Переменная для хранения экземпляра TrainModelController.
      */
-    private static TrainModelController instance;
+    private static TrainModelController ourInstance;
 
     /**
-     * Коллекция для хранения поездов в системе.
+     * Переменная для хранения экземпляра Database.
+     * @see Database
      */
-    private TreeSet<Train> trains;
+    private static Database database;
 
-    /**
-     * Private конструктор с ленивой инициализацией.
-     */
     private TrainModelController() {
-        trains = new TreeSet<>();
+        database = Database.getInstance();
     }
 
     /**
-     * Метод с ленивой инициализацией.
      * Получение текущего экземпляра.
      * @return  Экземпляр TrainModelController
      */
     public static TrainModelController getInstance() {
-        if (instance == null) {
-            instance = new TrainModelController();
+        if (ourInstance == null) {
+            ourInstance = new TrainModelController();
         }
-        return instance;
+        return ourInstance;
     }
 
-    /**
-     * Метод необходим для восстановления данных после десериализации.
-     * @param instance    Экземпляр TrainModelController.
-     */
-    public static void setInstance(TrainModelController instance) {
-        TrainModelController.instance = instance;
-    }
-
-    /**
-     * Геттер поездов.
-     * @return Коллекция <code>Train</code>
-     */
-    public TreeSet<Train> getTrains() {
-        return trains;
-    }
-
-    /**
-     * Сеттер поездов.
-     * @param trains    коллекция поездов.
-     */
-    public void setTrains(TreeSet<Train> trains) {
-        this.trains = trains;
-    }
-
-    /**
-     * Метод-заглушка.
-     * @param find Параметры поиска.
-     *             Может включать [*] - для пропуска нескольких символов
-     *             и [?] - для пропуска одного символа.
-     * @return  null
-     */
-    public ArrayList<Train> search(String find) {
-        return null;
-    }
-
-    /**
-     * Поиск по номеру поезда.
-     * @param numberTrain    номер поезда
-     * @return <code>Train</code> или null если поезд не найден.
-     */
-    public Train search(int numberTrain) {
-        for (Train train : trains) {
-            if (train.getTrainNumber() == numberTrain) {
-                return train;
+    public void addTrain(int numberTrain) {
+        String sql = "INSERT INTO `trains` (`number`) values ("+ numberTrain + ");";
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Error: Поезд с таким номером уже существует.");
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
             }
         }
-        return null;
     }
 
-    /**
-     * Добавление поезда в список поездов по его экземпляру.
-     * @param train    Поезд для добавления
-     * @return true - поезд успешно добавлен
-     *         false - поезд невозможно добавить
-     */
-    public boolean add(Train train) {
-        return trains.add(train);
-    }
+    public void deleteTrain(int numberTrain) {
+        // оставить так?
+        // или необходимо удалять расписание внутри метода
+        // не пользуясь контроллером расписания?
+        ScheduleModelController.getInstance().deleteScheduleTrain(getTrainId(numberTrain));
 
-    /**
-     * Добавление поезда в список поездов по номеру.
-     * @param trainNumber    номер поезда.
-     * @return true - поезд успешно добавлен,
-     *         false - поезд невозможно добавить.
-     */
-    public boolean add(int trainNumber) {
-        return trains.add(new Train(trainNumber));
-    }
-
-    /**
-     * Удаление поезда по номеру.
-     * @param number    номер поезда.
-     * @return true - поезд успешно удалён,
-     *         false - поезд невозможно удалить.
-     */
-    public boolean remove(int number) {
-        for (Train train : trains) {
-            if (train.getTrainNumber() == number) {
-                return trains.remove(train);
+        String sql = "delete from `trains` where `number` = '" + numberTrain + "';";
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
             }
         }
-        return false;
     }
 
-    /**
-     * Удаление поезда по его экземпляру.
-     * @param train    экземпляр поезда.
-     * @return true - успешное удаление,
-     *         false - не удалено.
-     */
-    public boolean remove(Train train) {
-        return trains.remove(train);
-    }
-
-    /**
-     * Метод добавления строки расписания для поезда.
-     * @param routeId              id маршрута.
-     * @param numberTrains         номер поезда.
-     * @param departureDateTime    дата и время итправления.
-     * @param hours                время движения до пункта назначения (часов).
-     * @return true - успешное добавление,
-     *         false - не добавлено.
-     */
-    public boolean addScheduleLine(int routeId,
-                                   int numberTrains,
-                                   LocalDateTime departureDateTime,
-                                   long hours) {
-        Route route = RouteModelController.getInstance().search(routeId);
-        Train train = search(numberTrains);
-
-        if (train != null && route != null) {
-            train.addScheduleLine(route, departureDateTime, hours, 0);
-            return true;
+    public void searchTrain(String strFind) {
+        if (strFind.contains("*")) {
+            strFind = strFind.replace("*", "%");
         }
-        return false;
-    }
-
-    /**
-     * Метод добавления строки расписания для поезда.
-     * @param routeId              id маршрута.
-     * @param numberTrain          номер поезда.
-     * @param departureDateTime    дата и время итправления.
-     * @param hours                время движения до пункта назначения (часов).
-     * @param min                  время движения до пункта назначения (минут).
-     * @return true - успешное добавление,
-     *         false - не добавлено.
-     */
-    public boolean addScheduleLine(int routeId,
-                                   int numberTrain,
-                                   LocalDateTime departureDateTime,
-                                   long hours,
-                                   long min) {
-        Route route = RouteModelController.getInstance().search(routeId);
-        Train train = search(numberTrain);
-
-        if (train != null && route != null) {
-            train.addScheduleLine(route, departureDateTime, hours, min);
-            return true;
+        if (strFind.contains("?")) {
+            strFind = strFind.replace("?", "_");
         }
-        return false;
-    }
-
-    /**
-     * Метод удаления строки в расписании поезда.
-     * @param scheduleId     id строки в расписании
-     * @param numberTrain    номер поезда у которого нужно удалить расписание.
-     * @return true - успешное удаление,
-     *         false - не удалено.
-     */
-    public boolean delScheduleLine(int scheduleId, int numberTrain) {
-        Train train = search(numberTrain);
-
-        if (train != null) {
-            TreeSet<Schedule> schedule = train.getTrainTimetable();
-            if (!schedule.isEmpty()) {
-                for (Schedule schedule1 : schedule) {
-                    if (schedule1.getId() == scheduleId) {
-                        return train.delScheduleLine(schedule1);
-                    }
-                }
+        String sql = "SELECT * FROM `itrain`.`trains` WHERE `number` LIKE '" + strFind + "';";
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.print("[" + resultSet.getInt("id") + "] " + resultSet.getString("number"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
             }
         }
-        return false;
+    }
+
+    public void viewTrain() {
+        String sql = "SELECT * FROM `trains`";
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.println("[" + resultSet.getInt("id") + "] " + resultSet.getString("number"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
+            }
+        }
     }
 
     /**
-     * Расписание поездов за ближайшие 24 часа от текущего времени.
-     * @return Расписание.
+     * Получить номер маршрута у поезда.
+     * @param numberTrain    номер поезда.
+     * @return id маршрута. Если у поезда отсутствует маршрут, возвращает 0.
      */
-    public LinkedHashMap<Train, ArrayList<Schedule>> viewSchedule() {
-        LinkedHashMap<Train, ArrayList<Schedule>> result = new LinkedHashMap<>();
-        LocalDateTime borderDateTime = LocalDateTime.now().plusHours(24);
+    public int getRouteId(int numberTrain) {
+        int result = 0;
+        int trainId = getTrainId(numberTrain);
+        String sql =  "select `route_id` from `schedule` where `train_id` = " + trainId + ";";
 
-        for (Train train : trains) {
-            ArrayList<Schedule> resultSchedule = new ArrayList<>();
-            for (Schedule schedule : train.getTrainTimetable()) {
-                if (schedule.getDepartureDateTime().isBefore(borderDateTime)) {
-                    resultSchedule.add(schedule);
-                }
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            if (resultSet.next()) {
+                result = resultSet.getInt("route_id");
             }
-            result.put(train, resultSchedule);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
+            }
         }
         return result;
     }
 
     /**
-     * Расписание определённого поезда
-     * @param numberTrain    номер поезда
-     * @return null - если поезд не найден,
-     *         массив с расписанием.
+     * Получить id поезда.
+     * @param numberTrain    номер поезда.
+     * @return id поезда.
      */
-    public ArrayList<Schedule> viewSchedule(int numberTrain) {
-        Train train = search(numberTrain);
-        if (train == null) {
-            return null;
+    public int getTrainId(int numberTrain) {
+        int idTrain = 0;
+        String sql = "SELECT `id` FROM `itrain`.`trains` WHERE `number`='" + numberTrain + "';";
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            if (resultSet.next()) {
+                idTrain = resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
+            }
         }
-        return new ArrayList<>(train.getTrainTimetable());
+        return idTrain;
+    }
+
+    public void editTrainNumber(int idTrain, int newTrainNumber) {
+        String sql = "UPDATE `itrain`.`trains` SET `number`='"+ newTrainNumber + "' WHERE `id`='" + idTrain + "';";
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
+            }
+        }
+    }
+
+    public void editTrainRoute(int idTrain, int idRoute, LocalDateTime depDateTime, int timeArrHours, int timeArrMinutes) {
+        String sql;
+        sql = "DELETE FROM `itrain`.`schedule` WHERE `train_id`='" + idTrain + "';";
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
+            }
+        }
+
+        if (timeArrMinutes <= 0) {
+            sql = "INSERT INTO `schedule` (`train_id`, `route_id`, `date`, `hour`) VALUES ('" + idTrain + "', '" + idRoute + "', '" + depDateTime + "', '" + timeArrHours + "');";
+        } else {
+            sql = "INSERT INTO `schedule` (`train_id`, `route_id`, `date`, `hour`, `min`) VALUES ('" + idTrain + "', '" + idRoute + "', '" + depDateTime + "', '" + timeArrHours + "', '" + timeArrMinutes + "');";
+        }
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
+            }
+        }
     }
 }

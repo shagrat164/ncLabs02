@@ -5,17 +5,12 @@
 package ru.solpro.view;
 
 import ru.solpro.controller.*;
-import ru.solpro.model.Train;
-import ru.solpro.model.Route;
-import ru.solpro.model.Station;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
 
 /**
  * Команда поиска.
@@ -28,11 +23,10 @@ public class SearchCommand implements Command {
      * Выполнение команды.
      * @param args    аргументы
      * @return true - продолжить выполнение, false - завершить выполнение.
-     * @throws SystemException  ошибка при работе пользователя с программой.
      * @throws IOException  ошибка ввыода/вывода
      */
     @Override
-    public boolean execute(String[] args) throws SystemException, IOException {
+    public boolean execute(String[] args) throws IOException {
         if (args == null || args.length < 1 || args.length > 1) {
             printHelp();
             return true;
@@ -88,30 +82,12 @@ public class SearchCommand implements Command {
 	 */
     private void searchStation() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-        database.connect();
+        StationModelController stationModelController = StationModelController.getInstance();
 
         System.out.print("\tВведите строку для поиска: ");
         String strFind = reader.readLine();
-        if (strFind.contains("*")) {
-            strFind = strFind.replace("*", "%");
-        }
-        if (strFind.contains("?")) {
-            strFind = strFind.replace("?", "_");
-        }
 
-        String sql = "SELECT * FROM `itrain`.`stations` WHERE `name` LIKE '" + strFind + "';";
-
-        try {
-            ResultSet resultSet = database.getStatement().executeQuery(sql);
-            while (resultSet.next()) {
-                System.out.print("[" + resultSet.getInt("id") + "] " + resultSet.getString("name"));
-            }
-            resultSet.close();
-        } catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        database.disconnect();
+        stationModelController.searchStation(strFind);
     }
 
 	/**
@@ -119,34 +95,12 @@ public class SearchCommand implements Command {
 	 */
     private void searchRoute() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-        database.connect();
+        RouteModelController routeModelController = RouteModelController.getInstance();
 
         System.out.print("\tВведите строку для поиска: ");
         String strFind = reader.readLine();
-        if (strFind.contains("*")) {
-            strFind = strFind.replace("*", "%");
-        }
-        if (strFind.contains("?")) {
-            strFind = strFind.replace("?", "_");
-        }
 
-        String sql = "select `t1`.`id`, `t2`.`name` as 'dep_name', `t3`.`name` as 'arr_name' " +
-                "from `itrain`.`routes` t1 " +
-                "join `itrain`.`stations` t2 on `t1`.`dep_id` = `t2`.`id` " +
-                "join `itrain`.`stations` t3 on `t1`.`arr_id` = `t3`.`id` " +
-                "where `t2`.`name` LIKE '" + strFind + "' OR `t3`.`name` LIKE '" + strFind + "';";
-
-        try {
-            ResultSet resultSet = database.getStatement().executeQuery(sql);
-            while (resultSet.next()) {
-                System.out.println("[" + resultSet.getInt("id") + "] " + resultSet.getString("dep_name") + "->" + resultSet.getString("arr_name"));
-            }
-            resultSet.close();
-        } catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        database.disconnect();
+        routeModelController.searchRoute(strFind);
     }
 
 	/**
@@ -154,29 +108,11 @@ public class SearchCommand implements Command {
 	 */
     private void searchTrain() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-        database.connect();
+        TrainModelController trainModelController = TrainModelController.getInstance();
 
         System.out.print("\tВведите номер поезда: ");
         String strFind = reader.readLine();
-        if (strFind.contains("*")) {
-            strFind = strFind.replace("*", "%");
-        }
-        if (strFind.contains("?")) {
-            strFind = strFind.replace("?", "_");
-        }
 
-        String sql = "SELECT * FROM `itrain`.`trains` WHERE `number` LIKE '" + strFind + "';";
-
-        try {
-            ResultSet resultSet = database.getStatement().executeQuery(sql);
-            while (resultSet.next()) {
-                System.out.print("[" + resultSet.getInt("id") + "] " + resultSet.getString("number"));
-            }
-            resultSet.close();
-        } catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        database.disconnect();
+        trainModelController.searchTrain(strFind);
     }
 }

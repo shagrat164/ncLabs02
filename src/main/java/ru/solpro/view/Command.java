@@ -19,10 +19,9 @@ public interface Command {
      * Выполнение команды.
      * @param args    аргументы
      * @return true - продолжить выполнение, false - завершить выполнение.
-     * @throws SystemException  ошибка при работе пользователя с программой.
      * @throws IOException  ошибка ввыода/вывода
      */
-    boolean execute(String[] args) throws SystemException, IOException;
+    boolean execute(String[] args) throws IOException;
 
     /**
      * Распечатать справку по команде.

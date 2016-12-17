@@ -11,25 +11,25 @@ package ru.solpro.controller;
  * @author Protsvetov Danila
  */
 public class SystemException extends Throwable {
-    /**
-     * Сообщение об ошибке
-     */
-    private String errorString;
-
-    /**
-     * Конструктор исключения
-     * @param message    Текст ошибки.
-     */
-    public SystemException(String message) {
-        errorString = message;
-    }
-
-    /**
-     * Для вывода сообщения об ошибке.
-     * @return Сообщение об ошибке
-     */
-    @Override
-    public String toString() {
-        return errorString;
-    }
+//    /**
+//     * Сообщение об ошибке
+//     */
+//    private String errorString;
+//
+//    /**
+//     * Конструктор исключения
+//     * @param message    Текст ошибки.
+//     */
+//    public SystemException(String message) {
+//        errorString = message;
+//    }
+//
+//    /**
+//     * Для вывода сообщения об ошибке.
+//     * @return Сообщение об ошибке
+//     */
+//    @Override
+//    public String toString() {
+//        return errorString;
+//    }
 }

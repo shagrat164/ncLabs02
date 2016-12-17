@@ -1,3 +1,7 @@
+/*
+ * @(#)Database.java 1.0 11.12.2016
+ */
+
 package ru.solpro.controller;
 
 import java.sql.*;
@@ -16,19 +20,33 @@ public class Database {
             "&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
+    private static Database instance;
 
     private Connection connection;
     private Statement statement;
 
-    public Database() {}
+    private Database() {
+        connect();
+    }
+
+    public static Database getInstance() {
+        if (instance == null) {
+            instance = new Database();
+        }
+        return instance;
+    }
 
     /**
      * Метод соединения с базой данных.
      */
     public void connect() {
         try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            statement = connection.createStatement();
+            if (connection == null) {
+                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            }
+            if (statement == null) {
+                statement = connection.createStatement();
+            }
             System.out.println("db connect");
         } catch (SQLException ex) {
             ex.printStackTrace();

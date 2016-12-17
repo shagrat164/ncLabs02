@@ -5,15 +5,11 @@
 package ru.solpro.view;
 
 import ru.solpro.controller.*;
-import ru.solpro.model.Train;
-import ru.solpro.model.Route;
-import ru.solpro.model.Station;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Команда удаления данных
@@ -26,11 +22,10 @@ public class DelCommand implements Command {
      * Выполнение команды.
      * @param args    аргументы
      * @return true - продолжить выполнение, false - завершить выполнение.
-     * @throws SystemException  ошибка при работе пользователя с программой.
      * @throws IOException  ошибка ввыода/вывода
      */
     @Override
-    public boolean execute(String[] args) throws IOException, SystemException {
+    public boolean execute(String[] args) throws IOException {
         if (args == null || args.length < 1 || args.length > 1) {
             System.out.println("Неверный аргумент у команды.");
             printHelp();
@@ -89,84 +84,52 @@ public class DelCommand implements Command {
     /**
      * Удаление расписания у поезда
      */
-    private void delSchedule() throws IOException, SystemException {
+    private void delSchedule() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-        database.connect();
+        ScheduleModelController scheduleModelController = ScheduleModelController.getInstance();
 
         System.out.print("\tВведите id расписания: ");
         int idSchedule = Integer.parseInt(reader.readLine());
-        String sql = "delete from `schedule` where `id` = '" + idSchedule + "';";
 
-        try {
-            database.getStatement().executeUpdate(sql);
-        } catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        database.disconnect();
+        scheduleModelController.deleteSchedule(idSchedule);
     }
 
     /**
      * Удаление поезда
      */
-    private void delTrain() throws IOException, SystemException {
+    private void delTrain() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-        database.connect();
+        TrainModelController trainModelController = TrainModelController.getInstance();
 
         System.out.print("\tВведите номер поезда: ");
         int numberTrain = Integer.parseInt(reader.readLine());
-        String sql = "delete from `trains` where `number` = '" + numberTrain + "';";
 
-        try {
-            database.getStatement().executeUpdate(sql);
-        } catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        database.disconnect();
+        trainModelController.deleteTrain(numberTrain);
     }
 
     /**
      * Удаление маршрута
      */
-    private void delRoute() throws IOException, SystemException {
+    private void delRoute() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-        database.connect();
+        RouteModelController routeModelController = RouteModelController.getInstance();
 
         System.out.print("Введите id маршрута который требуется удалить: ");
         int idRoute = Integer.parseInt(reader.readLine());
 
-        String sql = "delete from `routes` where `id` = '" + idRoute + "';";
-
-        try {
-            database.getStatement().executeUpdate(sql);
-        } catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        database.disconnect();
+        routeModelController.deleteRoute(idRoute);
     }
 
     /**
      * удаление станции
      */
-    private void delStation() throws IOException, SystemException {
-        //  delete from stations where id = 7;
-
+    private void delStation() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-        database.connect();
+        StationModelController stationModelController = StationModelController.getInstance();
 
         System.out.print("Введите id станции которую требуется удалить: ");
         int idStation = Integer.parseInt(reader.readLine());
 
-        String sql = "delete from `stations` where `id` = '" + idStation + "';";
-
-        try {
-            database.getStatement().executeUpdate(sql);
-        } catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        database.disconnect();
+        stationModelController.deleteStation(idStation);
     }
 }

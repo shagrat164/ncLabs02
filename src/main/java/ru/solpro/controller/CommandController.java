@@ -85,8 +85,6 @@ public class CommandController {
                 System.out.println("Error: " + e);
             } catch (NumberFormatException e) {
                 System.out.println("Error: " + e);
-            } catch (SystemException e) {
-                System.out.println("Error: " + e);
             }
         } while (result);
     }

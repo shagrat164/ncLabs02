@@ -4,7 +4,7 @@
 
 package ru.solpro.view;
 
-import ru.solpro.controller.SystemException;
+import ru.solpro.controller.Database;
 
 import java.io.IOException;
 
@@ -19,11 +19,12 @@ public class ExitCommand implements Command {
      * Выполнение команды.
      * @param args    аргументы
      * @return true - продолжить выполнение, false - завершить выполнение.
-     * @throws SystemException  ошибка при работе пользователя с программой.
      * @throws IOException  ошибка ввыода/вывода
      */
     @Override
-    public boolean execute(String[] args) throws SystemException, IOException {
+    public boolean execute(String[] args) throws IOException {
+        Database database = Database.getInstance();
+        database.disconnect();
         return false;
     }
 

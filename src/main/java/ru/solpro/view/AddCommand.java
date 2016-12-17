@@ -5,16 +5,10 @@
 package ru.solpro.view;
 
 import ru.solpro.controller.*;
-import ru.solpro.controller.TrainModelController;
-import ru.solpro.controller.StationModelController;
-import ru.solpro.model.Train;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -35,7 +29,7 @@ public class AddCommand implements Command {
      * @throws IOException  ошибка ввыода/вывода
      */
     @Override
-    public boolean execute(String[] args) throws SystemException, IOException {
+    public boolean execute(String[] args) throws IOException {
         if (args == null || args.length < 1 || args.length > 1) {
             printHelp();
             return true;
@@ -93,13 +87,11 @@ public class AddCommand implements Command {
 
     /**
      * Добавление новой станции.
-     * @throws SystemException
      * @throws IOException
      */
-    private void addStation() throws SystemException, IOException {
+    private void addStation() throws IOException {
+        StationModelController stationModelController = StationModelController.getInstance();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-        database.connect();
 
         System.out.println("Для завершения операции добавления введите exit.");
         while (true) {
@@ -108,28 +100,17 @@ public class AddCommand implements Command {
             if (isExitOperation(nameStation)) {
                 break;
             }
-            String sql = "INSERT INTO stations (name) VALUES ('" + nameStation.toUpperCase() + "')";
-            try {
-                database.getStatement().executeUpdate(sql);
-            } catch (SQLIntegrityConstraintViolationException e) {
-                System.out.println("Error: Станция с таким названием существует.");
-            } catch (SQLException e) {
-                System.out.println("Error: " + e);
-            }
+            stationModelController.addStation(nameStation);
         }
-        database.disconnect();
     }
 
     /**
      * Добавление нового маршрута
-     * @throws SystemException
      * @throws IOException
      */
-    private void addRoute() throws SystemException, IOException {
+    private void addRoute() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-
-        database.connect();
+        RouteModelController routeModelController = RouteModelController.getInstance();
 
         System.out.println("Для завершения операции добавления введите exit.");
 
@@ -148,16 +129,8 @@ public class AddCommand implements Command {
             }
             Integer idArrStation = Integer.parseInt(s2);
 
-            String sql = "INSERT INTO `routes` (`dep_id`, `arr_id`) VALUES ("+ idDepStation + ", " + idArrStation + ");";
-            try {
-                database.getStatement().executeUpdate(sql);
-            } catch (SQLIntegrityConstraintViolationException e) {
-                System.out.println("Error: Станции не существует.");
-            } catch (SQLException e) {
-                System.out.println("Error: " + e);
-            }
+            routeModelController.addRoute(idDepStation, idArrStation);
         }
-        database.disconnect();
     }
 
     /**
@@ -165,14 +138,11 @@ public class AddCommand implements Command {
      * @throws SystemException
      * @throws IOException
      */
-    private void addTrain() throws SystemException, IOException {
+    private void addTrain() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-
-        database.connect();
+        TrainModelController trainModelController = TrainModelController.getInstance();
 
         System.out.println("Для завершения операции добавления введите exit.");
-
         while (true) {
             System.out.print("\tНомер поезда: ");
             String strNumberTrain = reader.readLine();
@@ -180,17 +150,9 @@ public class AddCommand implements Command {
                 break;
             }
             Integer numberTrain = Integer.parseInt(strNumberTrain);
-            String sql = "INSERT INTO `trains` (`number`) values ("+ numberTrain + ");";
 
-            try {
-                database.getStatement().executeUpdate(sql);
-            } catch (SQLIntegrityConstraintViolationException e) {
-                System.out.println("Error: Поезд с таким номером уже существует.");
-            } catch (SQLException e) {
-                System.out.println("Error: " + e);
-            }
+            trainModelController.addTrain(numberTrain);
         }
-        database.disconnect();
     }
 
     /**
@@ -198,11 +160,10 @@ public class AddCommand implements Command {
      * @throws SystemException
      * @throws IOException
      */
-    private void addSchedule() throws SystemException, IOException {
+    private void addSchedule() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Database database = new Database();
-
-        database.connect();
+        ScheduleModelController scheduleModelController = ScheduleModelController.getInstance();
+        TrainModelController trainModelController = TrainModelController.getInstance();
 
         System.out.println("Для завершения операции добавления введите exit.");
 
@@ -214,21 +175,18 @@ public class AddCommand implements Command {
             }
             Integer numberTrain = Integer.parseInt(strNumberTrain);
 
-            int routeId = 0;
+            int trainId = trainModelController.getTrainId(numberTrain);
+            if (trainId == 0) {
+                System.out.println("Error: Поезда с таким номером нет в базе.");
+                break;
+            }
 
-            String sql =  "select `route_id` from `schedule` where `train_num` = " + numberTrain + ";";
+            int routeId = trainModelController.getRouteId(numberTrain);
 
-            try {
-                ResultSet resultSet = database.getStatement().executeQuery(sql);
-                if (resultSet.next()) {
-                    routeId = resultSet.getInt("route_id");
-                } else {
-                    System.out.print("\tУ данного поезда отсутствует маршрут. " +
-                            "Введите id маршрута: ");
-                    routeId = Integer.parseInt(reader.readLine());
-                }
-            } catch (SQLException e) {
-                System.out.println("Error: " + e);
+            if (routeId == 0) {
+                System.out.print("\tУ данного поезда отсутствует маршрут. " +
+                        "Введите id маршрута: ");
+                routeId = Integer.parseInt(reader.readLine());
             }
 
             System.out.print("\tДата отправления (dd.mm.yyyy): ");
@@ -263,18 +221,8 @@ public class AddCommand implements Command {
             }
             Integer timeArrMinutes = Integer.parseInt(strTimeArrMinutes);
 
-            if (timeArrMinutes <= 0) {
-                sql = "insert into `schedule` (`train_id`, `route_id`, `date`, `hour`) values ('" + numberTrain + "', '" + routeId + "', '" + depDateTime + "', '" + timeArrHours + "');";
-            } else {
-                sql = "insert into `schedule` (`train_id`, `route_id`, `date`, `hour`, `min`) values ('" + numberTrain + "', '" + routeId + "', '" + depDateTime + "', '" + timeArrHours + "', '" + timeArrMinutes + "');";
-            }
-            try {
-                database.getStatement().executeUpdate(sql);
-            } catch (SQLException e) {
-                System.out.println("Error: " + e);
-            }
+            scheduleModelController.addSchedule(trainId, routeId, depDateTime, timeArrHours, timeArrMinutes);
         }
-        database.disconnect();
     }
 
     //проверка на команду выхода из процесса добавления

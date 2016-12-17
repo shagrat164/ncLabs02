@@ -16,6 +16,7 @@ import ru.solpro.controller.CommandController;
  */
 
 public class MainApp {
+    public static final boolean DEBUG = true;
 
     /**
      * Точка входа в приложение при запуске.

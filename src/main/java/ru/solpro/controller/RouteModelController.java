@@ -4,56 +4,37 @@
 
 package ru.solpro.controller;
 
-import ru.solpro.model.Route;
-import ru.solpro.model.Station;
+import ru.solpro.MainApp;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * Контроллер для работы с моделью  <code>Route</code> (маршрут).
  * Является синглтоном.
- * @see Route
  * @version 1.0 11 декабря 2016
  * @author Protsvetov Danila
  */
-
 public class RouteModelController {
-
     /**
      * Переменная для хранения экземпляра RouteModelController.
      */
     private static RouteModelController instance;
 
     /**
-     * Коллекция для хранения маршрутов в системе.
+     * Переменная для хранения экземпляра Database.
+     * @see Database
      */
-    private TreeSet<Route> routes;
+    private static Database database;
 
-    /**
-     * Private конструктор с ленивой инициализацией.
-     */
     private RouteModelController() {
-        routes = new TreeSet<>();
+        database = Database.getInstance();
     }
 
     /**
-     * Метод необходим для восстановления данных после десериализации.
-     * @param instance    Экземпляр RouteModelController
-     */
-    public static void setInstance(RouteModelController instance) {
-        RouteModelController.instance = instance;
-    }
-
-    /**
-     * Метод с ленивой инициализацией.
      * Получение текущего экземпляра.
-     * @return  Экземпляр RouteModelController
+     * @return  экземпляр RouteModelController
      */
     public static RouteModelController getInstance() {
         if (instance == null) {
@@ -62,112 +43,94 @@ public class RouteModelController {
         return instance;
     }
 
-    /**
-     * Геттер маршрутов
-     * @return Коллекция <code>Route</code>
-     */
-    public TreeSet<Route> getRoutes() {
-        return routes;
-    }
-
-    /**
-     * Сеттер маршрутов
-     * @param routes    коллекция маршрутов
-     */
-    public void setRoutes(TreeSet<Route> routes) {
-        this.routes = routes;
-    }
-
-    /**
-     * Метод осуществляет поиск маршрута по строке поиска.
-     * @param find Параметры поиска.
-     *             Может включать [*] - для пропуска нескольких символов
-     *             и [?] - для пропуска одного символа.
-     * @return Список найденных маршрутов
-     */
-    public ArrayList<Route> search(String find) {
-        ArrayList<Route> result = new ArrayList<>();
-        if (find.contains("*")) {
-            find = find.replace("*", "[а-яА-ЯёЁa-zA-Z0-9-\\s]*");
-        }
-        if (find.contains("?")) {
-            find = find.replace("?", "[а-яА-ЯёЁa-zA-Z0-9-\\s]");
-        }
-        Pattern p = Pattern.compile("^" + find.toUpperCase() + "$");
-        Matcher m;
-        for (Route route : routes) {
-            m = p.matcher(route.toString().toUpperCase());
-            if (m.matches()) {
-                result.add(route);
+    public void addRoute(int idDepStation, int idArrStation) {
+        String sql = "INSERT INTO `routes` (`dep_id`, `arr_id`) VALUES ("+ idDepStation + ", " + idArrStation + ");";
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Error: Станции не существует.");
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
             }
         }
-        return result;
     }
 
-    /**
-     * Метод поиска по идентификатору
-     * @param id Идентификатор для поиска
-     * @return  <code>Route</code> или null если маршрут не найден
-     */
-    public Route search(int id) {
-        for (Route route : routes) {
-            if (route.getId() == id) {
-                return route;
+    public void viewRoute() {
+        String sql = "SELECT t1.id, t2.name as 'dep', t3.name as 'arr' FROM routes t1 " +
+                "JOIN stations t2 ON (t1.dep_id = t2.id) " +
+                "JOIN stations t3 ON (t1.arr_id = t3.id);";
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.println("[" + resultSet.getInt("id") + "] " + resultSet.getString("dep") + "->" + resultSet.getString("arr"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
             }
         }
-        return null;
     }
 
-    /**
-     * Метод удаляет маршрут из списка маршрутов.
-     * @param id Идентификатор маршрута
-     * @return true - маршрут успешно удалён
-     *         false - маршрут не найден для удаления
-     */
-    public boolean remove(int id) {
-        for (Route route : routes) {
-            if (route.getId() == id) {
-                return routes.remove(route);
+    public void editRoute(int number, int idDep, int idArr) {
+        String sql;
+        if (idDep > 0 && idArr == 0) {
+            sql = "UPDATE `itrain`.`routes` SET `dep_id`='" + idDep + "' WHERE `id`='" + number + "';";
+        } else if (idDep == 0 && idArr > 0) {
+            sql = "UPDATE `itrain`.`routes` SET `arr_id`='" + idArr + "' WHERE `id`='" + number + "';";
+        } else {
+            sql = "UPDATE `itrain`.`routes` SET `dep_id`='" + idDep + "', `arr_id`='" + idArr + "' WHERE `id`='" + number + "';";
+        }
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
             }
         }
-        return false;
     }
 
-    /**
-     * Удаление маршрута из списка маршрутов по его экземпляру.
-     * @param route    Маршрут для удаления
-     * @return true - маршрут успешно удалён
-     *         false - маршрут не найден для удаления
-     */
-    public boolean remove(Route route) {
-        return routes.remove(route);
-    }
-
-    /**
-     * Добавление маршрута в список маршрутов по его экземпляру.
-     * @param route    Маршрут для добавления
-     * @return true - маршрут успешно добавлен
-     *         false - маршрут невозможно добавить
-     */
-    public boolean add(Route route) {
-        return routes.add(route);
-    }
-
-    /**
-     * Добавление маршрута по id станций отправления и назначения.
-     * @param idDeparture    id станции отправления
-     * @param idArrival      id станции назначения
-     * @return true - маршрут успешно добавлен
-     *         false - маршрут невозможно добавить
-     */
-    public boolean add(int idDeparture, int idArrival) {
-        StationModelController stationController = StationModelController.getInstance();
-        Station departure = stationController.search(idDeparture);
-        Station arrival = stationController.search(idArrival);
-
-        if (departure == null || arrival == null || departure.equals(arrival)) {
-            return false;
+    public void searchRoute(String strFind) {
+        if (strFind.contains("*")) {
+            strFind = strFind.replace("*", "%");
         }
-        return this.routes.add(new Route(idDeparture, idArrival));
+        if (strFind.contains("?")) {
+            strFind = strFind.replace("?", "_");
+        }
+        String sql = "select `t1`.`id`, `t2`.`name` as 'dep_name', `t3`.`name` as 'arr_name' " +
+                "from `itrain`.`routes` t1 " +
+                "join `itrain`.`stations` t2 on `t1`.`dep_id` = `t2`.`id` " +
+                "join `itrain`.`stations` t3 on `t1`.`arr_id` = `t3`.`id` " +
+                "where `t2`.`name` LIKE '" + strFind + "' OR `t3`.`name` LIKE '" + strFind + "';";
+        try {
+            ResultSet resultSet = database.getStatement().executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.println("[" + resultSet.getInt("id") + "] " + resultSet.getString("dep_name") + "->" + resultSet.getString("arr_name"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
+            }
+        }
+    }
+
+    public void deleteRoute(int idRoute) {
+        String sql = "delete from `routes` where `id` = '" + idRoute + "';";
+        try {
+            database.getStatement().executeUpdate(sql);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Error: Удаление не возможно. На маршрут ссылаются поезда.");
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (MainApp.DEBUG) {
+                System.out.println(sql);
+            }
+        }
     }
 }
