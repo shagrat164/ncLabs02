@@ -17,6 +17,7 @@ public class ExitCommand implements Command {
 
     /**
      * Выполнение команды.
+     * Отключение от базы данных, заем выход из программы.
      * @param args    аргументы
      * @return true - продолжить выполнение, false - завершить выполнение.
      * @throws IOException  ошибка ввыода/вывода

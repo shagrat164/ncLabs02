@@ -10,12 +10,14 @@ import ru.solpro.controller.CommandController;
 
 /**
  * Главный класс приложения.
- *
  * @version 1.0 11 декабря 2016
  * @author Protsvetov Danila
  */
 
 public class MainApp {
+    /**
+     * Режим отладки SQL запросов.
+     */
     public static final boolean DEBUG = true;
 
     /**

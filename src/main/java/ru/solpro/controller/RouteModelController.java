@@ -22,7 +22,7 @@ public class RouteModelController {
     /**
      * Переменная для хранения экземпляра RouteModelController.
      */
-    private static RouteModelController instance;
+    private static RouteModelController ourInstance;
 
     /**
      * Переменная для хранения экземпляра Database.
@@ -39,10 +39,10 @@ public class RouteModelController {
      * @return  экземпляр RouteModelController
      */
     public static RouteModelController getInstance() {
-        if (instance == null) {
-            instance = new RouteModelController();
+        if (ourInstance == null) {
+            ourInstance = new RouteModelController();
         }
-        return instance;
+        return ourInstance;
     }
 
     public void addRoute(int idDepStation, int idArrStation) {

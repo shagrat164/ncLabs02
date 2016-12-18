@@ -5,7 +5,6 @@
 package ru.solpro.view;
 
 import ru.solpro.controller.CommandController;
-import ru.solpro.controller.SystemException;
 
 import java.io.IOException;
 import java.util.Map;
@@ -31,7 +30,6 @@ public class HelpCommand implements Command {
      * Выполнение команды.
      * @param args    аргументы
      * @return true - продолжить выполнение, false - завершить выполнение.
-     * @throws SystemException  ошибка при работе пользователя с программой.
      * @throws IOException  ошибка ввыода/вывода
      */
     @Override

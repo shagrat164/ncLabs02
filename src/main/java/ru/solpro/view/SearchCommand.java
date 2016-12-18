@@ -81,6 +81,7 @@ public class SearchCommand implements Command {
 
 	/**
 	 * Поиск станции.
+     * @throws IOException ошибка ввыода/вывода
 	 */
     private void searchStation() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -91,17 +92,18 @@ public class SearchCommand implements Command {
 
         ArrayList<Station> result = stationModelController.searchStation(strFind);
 
-        if (!result.isEmpty()) {
+        if (result.isEmpty()) {
+            System.out.println("По запросу ничего не найдено.");
+        } else {
             for (Station station : result) {
                 System.out.println(station);
             }
-        } else {
-            System.out.println("По запросу ничего не найдено.");
         }
     }
 
 	/**
 	 * Поиск маршрута.
+     * @throws IOException ошибка ввыода/вывода
 	 */
     private void searchRoute() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -112,17 +114,18 @@ public class SearchCommand implements Command {
 
         ArrayList<Route> result = routeModelController.searchRoute(strFind);
 
-        if (!result.isEmpty()) {
+        if (result.isEmpty()) {
+            System.out.println("По запросу ничего не найдено.");
+        } else {
             for (Route route : result) {
                 System.out.println(route);
             }
-        } else {
-            System.out.println("По запросу ничего не найдено.");
         }
     }
 
 	/**
 	 * Поиск поезда.
+     * @throws IOException ошибка ввыода/вывода
 	 */
     private void searchTrain() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -133,12 +136,12 @@ public class SearchCommand implements Command {
 
         ArrayList<Train> result = trainModelController.searchTrain(strFind);
 
-        if (!result.isEmpty()) {
+        if (result.isEmpty()) {
+            System.out.println("По запросу ничего не найдено.");
+        } else {
             for (Train train : result) {
                 System.out.println(train);
             }
-        } else {
-            System.out.println("По запросу ничего не найдено.");
         }
     }
 }

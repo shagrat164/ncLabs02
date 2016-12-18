@@ -25,7 +25,6 @@ public class AddCommand implements Command {
      * Выполнение команды.
      * @param args    аргументы
      * @return true - продолжить выполнение, false - завершить выполнение.
-     * @throws SystemException  ошибка при работе пользователя с программой.
      * @throws IOException  ошибка ввыода/вывода
      */
     @Override
@@ -87,7 +86,7 @@ public class AddCommand implements Command {
 
     /**
      * Добавление новой станции.
-     * @throws IOException
+     * @throws IOException  ошибка ввыода/вывода
      */
     private void addStation() throws IOException {
         StationModelController stationModelController = StationModelController.getInstance();
@@ -106,7 +105,7 @@ public class AddCommand implements Command {
 
     /**
      * Добавление нового маршрута
-     * @throws IOException
+     * @throws IOException  ошибка ввыода/вывода
      */
     private void addRoute() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -135,8 +134,7 @@ public class AddCommand implements Command {
 
     /**
      * Добавление нового поезда
-     * @throws SystemException
-     * @throws IOException
+     * @throws IOException  ошибка ввыода/вывода
      */
     private void addTrain() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -157,8 +155,7 @@ public class AddCommand implements Command {
 
     /**
      * Добавление расписания у определённого поезда
-     * @throws SystemException
-     * @throws IOException
+     * @throws IOException  ошибка ввыода/вывода
      */
     private void addSchedule() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

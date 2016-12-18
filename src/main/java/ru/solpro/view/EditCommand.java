@@ -9,8 +9,6 @@ import ru.solpro.controller.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -27,7 +25,6 @@ public class EditCommand implements Command {
      * Выполнение команды.
      * @param args    аргументы
      * @return true - продолжить выполнение, false - завершить выполнение.
-     * @throws SystemException  ошибка при работе пользователя с программой.
      * @throws IOException  ошибка ввыода/вывода
      */
     @Override
@@ -83,6 +80,10 @@ public class EditCommand implements Command {
         return "Редактирование данных.";
     }
 
+    /**
+     * Редактирование поезда.
+     * @throws IOException ошибка ввыода/вывода
+     */
     private void editTrain() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         TrainModelController trainModelController = TrainModelController.getInstance();
@@ -112,7 +113,9 @@ public class EditCommand implements Command {
 
     /**
      * Меняет маршрут и добавляет первую дату в расписание.
-     * @throws IOException
+     * @param idTrain    id поезда
+     * @param idRoute    id нового маршрута
+     * @throws IOException ошибка ввыода/вывода
      */
     private void editTrainRoute(int idTrain, int idRoute) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -148,6 +151,7 @@ public class EditCommand implements Command {
 
 	/**
 	 * Редактирование маршрута.
+     * @throws IOException ошибка ввыода/вывода
 	 */
     private void editRoute() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -177,6 +181,7 @@ public class EditCommand implements Command {
 
 	/**
 	 * Редактирование станции.
+     * @throws IOException ошибка ввыода/вывода
 	 */
     private void editStation() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

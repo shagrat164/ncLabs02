@@ -5,7 +5,7 @@
 package ru.solpro.model;
 
 /**
- * Created by danila on 17.12.2016.
+ * Класс для объекта поезд.
  *
  * @author Protsvetov Danila
  * @version 1.0
@@ -20,6 +20,14 @@ public class Train {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     @Override

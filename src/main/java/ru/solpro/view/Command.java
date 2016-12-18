@@ -4,8 +4,6 @@
 
 package ru.solpro.view;
 
-import ru.solpro.controller.SystemException;
-
 import java.io.IOException;
 
 /**

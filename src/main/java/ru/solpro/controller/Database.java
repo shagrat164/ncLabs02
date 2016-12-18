@@ -20,7 +20,7 @@ public class Database {
             "&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
-    private static Database instance;
+    private static Database ourInstance;
 
     private Connection connection;
     private Statement statement;
@@ -30,10 +30,10 @@ public class Database {
     }
 
     public static Database getInstance() {
-        if (instance == null) {
-            instance = new Database();
+        if (ourInstance == null) {
+            ourInstance = new Database();
         }
-        return instance;
+        return ourInstance;
     }
 
     /**

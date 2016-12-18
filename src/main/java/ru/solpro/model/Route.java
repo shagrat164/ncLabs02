@@ -5,7 +5,7 @@
 package ru.solpro.model;
 
 /**
- * Created by danila on 17.12.2016.
+ * Класс для объекта маршрут.
  *
  * @author Protsvetov Danila
  * @version 1.0
@@ -25,6 +25,18 @@ public class Route {
 
     public void setArr(String arr) {
         this.arr = arr;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDep() {
+        return dep;
+    }
+
+    public String getArr() {
+        return arr;
     }
 
     @Override

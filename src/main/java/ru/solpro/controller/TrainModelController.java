@@ -91,6 +91,7 @@ public class TrainModelController {
     /**
      * Поиск поезда
      * @param strFind    строка поиска.
+     * @return коллекция с поездами.
      */
     public ArrayList<Train> searchTrain(String strFind) {
         ArrayList<Train> result = new ArrayList<>();
@@ -123,6 +124,7 @@ public class TrainModelController {
 
     /**
      * Просмотр поездов.
+     * @return коллекция с поездами и маршрутом.
      */
     public LinkedHashMap<Train, Route> viewTrain() {
         LinkedHashMap<Train, Route> result = new LinkedHashMap<>();
@@ -214,6 +216,11 @@ public class TrainModelController {
         return idTrain;
     }
 
+    /**
+     * Изменение номера поезда.
+     * @param idTrain           id поезда.
+     * @param newTrainNumber    новый номер поезда.
+     */
     public void editTrainNumber(int idTrain, int newTrainNumber) {
         String sql = "UPDATE `trains` SET `number`='"+ newTrainNumber + "' WHERE `id`='" + idTrain + "';";
         try {
@@ -226,6 +233,14 @@ public class TrainModelController {
         }
     }
 
+    /**
+     * Изменение маршрута у поезда.
+     * @param idTrain           id поезда.
+     * @param idRoute           id маршрута.
+     * @param depDateTime       дата/время отправления.
+     * @param timeArrHours      время движения (часы)
+     * @param timeArrMinutes    время движения (минуты)
+     */
     public void editTrainRoute(int idTrain,
                                int idRoute,
                                LocalDateTime depDateTime,

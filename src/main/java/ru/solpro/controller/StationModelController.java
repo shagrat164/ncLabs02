@@ -22,7 +22,7 @@ public class StationModelController {
     /**
      * Переменная для хранения экземпляра StationModelController.
      */
-    private static StationModelController instance;
+    private static StationModelController ourInstance;
 
     /**
      * Переменная для хранения экземпляра Database.
@@ -39,10 +39,10 @@ public class StationModelController {
      * @return  экземпляр StationModelController
      */
     public static StationModelController getInstance() {
-        if (instance == null) {
-            instance = new StationModelController();
+        if (ourInstance == null) {
+            ourInstance = new StationModelController();
         }
-        return instance;
+        return ourInstance;
     }
 
     public void addStation(String name) {

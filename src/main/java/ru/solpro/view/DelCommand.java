@@ -83,6 +83,7 @@ public class DelCommand implements Command {
 
     /**
      * Удаление расписания у поезда
+     * @throws IOException ошибка ввыода/вывода
      */
     private void delSchedule() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -96,6 +97,7 @@ public class DelCommand implements Command {
 
     /**
      * Удаление поезда
+     * @throws IOException ошибка ввыода/вывода
      */
     private void delTrain() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -109,6 +111,7 @@ public class DelCommand implements Command {
 
     /**
      * Удаление маршрута
+     * @throws IOException ошибка ввыода/вывода
      */
     private void delRoute() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -122,6 +125,7 @@ public class DelCommand implements Command {
 
     /**
      * удаление станции
+     * @throws IOException ошибка ввыода/вывода
      */
     private void delStation() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

@@ -115,6 +115,7 @@ public class ScheduleModelController {
 
     /**
      * Расписание всех поездов за ближайшие 24 часа
+     * @return коллекция с расписанием.
      */
     public ArrayList<Schedule> viewSchedule() {
         ArrayList<Schedule> result = new ArrayList<>();
@@ -138,7 +139,7 @@ public class ScheduleModelController {
             while (resultSet.next()) {
                 Schedule schedule = new Schedule();
                 schedule.setId(resultSet.getInt("id"));
-                schedule.setNumbeTrain(resultSet.getInt("train"));
+                schedule.setNumberTrain(resultSet.getInt("train"));
                 schedule.setDep(resultSet.getString("dep"));
                 schedule.setArr(resultSet.getString("arr"));
                 schedule.setTimeDep(resultSet.getString("time_dep"));
@@ -157,8 +158,9 @@ public class ScheduleModelController {
     }
 
     /**
-     * Вывод расписания у определённого поезда
-     * @param numberTrain   номер поезда
+     * Вывод расписания у определённого поезда.
+     * @param numberTrain   номер поезда.
+     * @return коллекция с расписанием.
      */
     public ArrayList<Schedule> viewSchedule(int numberTrain) {
         ArrayList<Schedule> result = new ArrayList<>();
@@ -182,7 +184,7 @@ public class ScheduleModelController {
             while (resultSet.next()) {
                 Schedule schedule = new Schedule();
                 schedule.setId(resultSet.getInt("id"));
-                schedule.setNumbeTrain(resultSet.getInt("train"));
+                schedule.setNumberTrain(resultSet.getInt("train"));
                 schedule.setDep(resultSet.getString("dep"));
                 schedule.setArr(resultSet.getString("arr"));
                 schedule.setTimeDep(resultSet.getString("time_dep"));

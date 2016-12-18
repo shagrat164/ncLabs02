@@ -5,14 +5,14 @@
 package ru.solpro.model;
 
 /**
- * Created by danila on 17.12.2016.
+ * Класс для объекта расписание.
  *
  * @author Protsvetov Danila
  * @version 1.0
  */
 public class Schedule {
     private int id;
-    private int numbeTrain;
+    private int numberTrain;
     private String dep;
     private String arr;
     private String timeDep;
@@ -22,8 +22,8 @@ public class Schedule {
         this.id = id;
     }
 
-    public void setNumbeTrain(int numbeTrain) {
-        this.numbeTrain = numbeTrain;
+    public void setNumberTrain(int numberTrain) {
+        this.numberTrain = numberTrain;
     }
 
     public void setDep(String dep) {
@@ -42,11 +42,35 @@ public class Schedule {
         this.timeArr = timeArr;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getNumberTrain() {
+        return numberTrain;
+    }
+
+    public String getDep() {
+        return dep;
+    }
+
+    public String getArr() {
+        return arr;
+    }
+
+    public String getTimeDep() {
+        return timeDep;
+    }
+
+    public String getTimeArr() {
+        return timeArr;
+    }
+
     @Override
     public String toString() {
         return "Schedule{" +
                 "id=" + id +
-                ", numbeTrain=" + numbeTrain +
+                ", numberTrain=" + numberTrain +
                 ", dep='" + dep + '\'' +
                 ", arr='" + arr + '\'' +
                 ", timeDep='" + timeDep + '\'' +

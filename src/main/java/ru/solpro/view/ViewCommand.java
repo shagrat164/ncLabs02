@@ -101,12 +101,12 @@ public class ViewCommand implements Command {
         StationModelController stationModelController = StationModelController.getInstance();
         ArrayList<Station> result = stationModelController.viewStation();
 
-        if (!result.isEmpty()) {
+        if (result.isEmpty()) {
+            System.out.println("Не определено ни одной станции.");
+        } else {
             for (Station station : result) {
                 System.out.println(station);
             }
-        } else {
-            System.out.println("Не определено ни одной станции.");
         }
     }
 
@@ -117,12 +117,12 @@ public class ViewCommand implements Command {
         RouteModelController routeModelController = RouteModelController.getInstance();
         ArrayList<Route> result = routeModelController.viewRoute();
 
-        if (!result.isEmpty()) {
+        if (result.isEmpty()) {
+            System.out.println("Не определено ни одного маршрута.");
+        } else {
             for (Route route : result) {
                 System.out.println(route);
             }
-        } else {
-            System.out.println("Не определено ни одного маршрута.");
         }
     }
 
@@ -133,7 +133,9 @@ public class ViewCommand implements Command {
         TrainModelController trainModelController = TrainModelController.getInstance();
         LinkedHashMap<Train, Route> result = trainModelController.viewTrain();
 
-        if (!result.isEmpty()) {
+        if (result.isEmpty()) {
+            System.out.println("Не определено ни одного поезда.");
+        } else {
             for (Map.Entry<Train, Route> trainRouteEntry : result.entrySet()) {
                 System.out.print(trainRouteEntry.getKey());
                 if (trainRouteEntry.getValue() != null) {
@@ -142,8 +144,6 @@ public class ViewCommand implements Command {
                     System.out.println("\tМаршрут не определён.");
                 }
             }
-        } else {
-            System.out.println("Не определено ни одного поезда.");
         }
     }
 
@@ -154,12 +154,12 @@ public class ViewCommand implements Command {
         ScheduleModelController scheduleModelController = ScheduleModelController.getInstance();
         ArrayList<Schedule> result = scheduleModelController.viewSchedule();
 
-        if (!result.isEmpty()) {
+        if (result.isEmpty()) {
+            System.out.println("Расписания нет.");
+        } else {
             for (Schedule schedule : result) {
                 System.out.println(schedule);
             }
-        } else {
-            System.out.println("Расписания нет.");
         }
     }
 
@@ -171,12 +171,12 @@ public class ViewCommand implements Command {
         ScheduleModelController scheduleModelController = ScheduleModelController.getInstance();
         ArrayList<Schedule> result = scheduleModelController.viewSchedule(numberTrain);
 
-        if (!result.isEmpty()) {
+        if (result.isEmpty()) {
+            System.out.println("Расписания нет.");
+        } else {
             for (Schedule schedule : result) {
                 System.out.println(schedule);
             }
-        } else {
-            System.out.println("Расписания нет.");
         }
     }
 }

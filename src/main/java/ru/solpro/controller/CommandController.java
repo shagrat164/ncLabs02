@@ -83,8 +83,6 @@ public class CommandController {
                 result = cmd.execute(parsedCommand.args);
             } catch (IOException e) {
                 System.out.println("Error: " + e);
-            } catch (NumberFormatException e) {
-                System.out.println("Error: " + e);
             }
         } while (result);
     }
